@@ -12,6 +12,7 @@ echo "PUID=${USERID}
 PGID=${GROUPID}
 TZ=Europe/Budapest
 USERDIR=/home/${USER}
+STACKDIR=/home/${USER}/${SUBDIR}
 " > .env-example
 
 echo "MYSQL_ROOT_PASSWORD=super_password

@@ -1,0 +1,198 @@
+version: "3.7"
+  
+### NETWORKS
+
+networks:
+  backend:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.88.88.0/24
+  default:
+    driver: bridge
+
+
+### SERVICES
+services:
+
+# Portainer - WebUI for Containers
+  portainer:
+    container_name: portainer
+    image: portainer/portainer:latest
+    restart: unless-stopped
+    command: -H unix:///var/run/docker.sock
+    networks:
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "9000:9000"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${STACKDIR}/portainer/data:/data # Change to local directory if you want to save/transfer config locally
+      - ${STACKDIR}/shared:/shared
+    env_file:
+      - .env
+    environment:
+      - TZ=${TZ}
+
+# Mosquitto - MQTT Broker
+# Create mosquitto.conf, passwd, mosquitto.log files  and set permissions to 775 user:docker
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    user: "$PUID:$PGID"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - backend
+    ports:
+      - "1883:1883" #http
+      - "9001:9001" #websockets
+#      - "8883:8883" #https 
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ${STACKDIR}/mosquitto/config:/mosquitto/config
+      - ${STACKDIR}/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ${STACKDIR}/mosquitto/config/passwd:/mosquitto/config/passwd
+      - ${STACKDIR}/mosquitto/data:/mosquitto/data
+      - ${STACKDIR}/mosquitto/log:/mosquitto/log
+      - ${STACKDIR}/shared:/shared
+    env_file:
+      - .env
+    environment:
+      PUID: $PUID
+      PGID: $PGID
+      TZ: $TZ
+
+# HomeAssistant
+  homeassistant:
+    container_name: homeassistant
+    restart: always
+    image: homeassistant/home-assistant
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyUSB1:/dev/ttyUSB1
+      - /dev/ttyACM0:/dev/ttyACM0
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ${STACKDIR}/homeassistant:/config
+      - ${STACKDIR}/shared:/shared
+    networks:
+      - backend
+    ports:
+      - "8123:8123"
+    privileged: true
+    depends_on:
+      - mosquitto
+      - influxdb
+    env_file:
+      - .env
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+
+# Telegraf
+telegraf:
+    container_name: telegraf
+    image: telegraf
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ${STACKDIR}/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    depends_on:
+      - influxdb
+      - mosquitto
+    networks:
+      - backend
+    environment:
+      - TZ=${TZ}
+
+# Grafana - Graphical data visualization for InfluxDB data
+grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    networks:
+      - backend
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "3000:3000"
+    user: "0"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ${STACKDIR}/grafana:/var/lib/grafana
+    depends_on:
+      - influxdb
+    env_file:
+      - .env
+    environment:
+      GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel"
+    environment:
+      - TZ=${TZ}
+
+### DATABASE
+
+# InfluxDB - Database for sensor data
+# Create influxdb.conf first
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - backend
+    ports:
+      - "8086:8086"
+      - "8088:8088"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ${STACKDIR}/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
+      - ${STACKDIR}/influxdb/db:/var/lib/influxdb
+#    command: -config /etc/influxdb/influxdb.conf
+    env_file:
+      - .env
+    environment:
+      - TZ=${TZ}
+
+# Postgres - Database
+postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ${STACKDIR}/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+      - pgsql.env
+    environment:
+      POSTGRES_PASSWORD: $PG_PWD
+      POSTGRES_USER: $PG_USER
+      POSTGRES_DB: $PG_DB
+    environment:
+      - TZ=${TZ}
+
+# Adminer - SQL DB front-end
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: unless-stopped
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - backend
+    ports:
+      - 9080:8080
+    environment:
+      - TZ=${TZ}

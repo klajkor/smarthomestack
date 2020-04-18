@@ -24,6 +24,7 @@ mkdir -p ~/${SUBDIR}/telegraf
 
 cd ~/${SUBDIR}
 find . -type d -exec touch {}/.gitignore \;
+rm ~/${SUBDIR}/mosquitto/log/.gitignore
 
 touch ~/${SUBDIR}/mosquitto/config/mosquitto.conf
 touch ~/${SUBDIR}/mosquitto/config/passwd

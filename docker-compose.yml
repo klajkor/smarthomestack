@@ -96,7 +96,7 @@ services:
       - TZ=${TZ}
 
 # Telegraf
-telegraf:
+  telegraf:
     container_name: telegraf
     image: telegraf
     volumes:
@@ -111,7 +111,7 @@ telegraf:
       - TZ=${TZ}
 
 # Grafana - Graphical data visualization for InfluxDB data
-grafana:
+  grafana:
     image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
@@ -160,7 +160,7 @@ grafana:
       - TZ=${TZ}
 
 # Postgres - Database
-postgres:
+  postgres:
     image: postgres
     container_name: postgres
     restart: always

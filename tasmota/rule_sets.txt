@@ -1,12 +1,11 @@
 Rule1
-  on tele-ADS1115#A0 do backlog var1 %value%; mult1 -1; add1 15400; mult1 0.0113; event pubdata1 endon
+  on tele-ADS1115#A0 do backlog var1 %value%; mult1 -1; add1 15400; mult1 0.01123; event pubdata1 endon
   on event#pubdata1 do publish tele/%topic%/SENSOR {"Time":"%timestamp%" , "SoilMoist0":%var1%} endon
-  on tele-ADS1115#A1 do backlog var2 %value%; mult2 -1; add2 15400; mult2 0.0113; event pubdata2 endon
+  on tele-ADS1115#A1 do backlog var2 %value%; mult2 -1; add2 15400; mult2 0.01123; event pubdata2 endon
   on event#pubdata2 do publish tele/%topic%/SENSOR {"Time":"%timestamp%" , "SoilMoist1":%var2%} endon
 
 Rule2
-  on tele-ADS1115#A2 do backlog var3 %value%; mult3 -1; add3 15400; mult3 0.0113; event pubdata3 endon
+  on tele-ADS1115#A2 do backlog var3 %value%; mult3 -1; add3 15400; mult3 0.01123; event pubdata3 endon
   on event#pubdata3 do publish tele/%topic%/SENSOR {"Time":"%timestamp%" , "SoilMoist2":%var3%} endon
-  on tele-ADS1115#A3 do backlog var4 %value%; mult4 -1; add4 15400; mult4 0.0113; event pubdata4 endon
+  on tele-ADS1115#A3 do backlog var4 %value%; mult4 -1; add4 15400; mult4 0.01123; event pubdata4 endon
   on event#pubdata4 do publish tele/%topic%/SENSOR {"Time":"%timestamp%" , "SoilMoist3":%var4%} endon
-

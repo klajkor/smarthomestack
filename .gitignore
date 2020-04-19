@@ -14,4 +14,4 @@
 mosquitto/log/mosquitto.log
 portainer/data/**
 homeassistant/.storage/**
-
+tasmotizer.cfg

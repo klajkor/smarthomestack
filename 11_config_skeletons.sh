@@ -24,6 +24,12 @@ PG_PWD=super_password
 PG_DB=pgdatabase
 " > pgsql.env-example
 
+echo 'env $(cat /home/'${USER}'/'${SUBDIR}'/.env) /usr/local/bin/docker-compose -f /home/'${USER}'/'${SUBDIR}'/docker-compose.yml up -d' > stack_up.sh
+chmod 755 stack_up.sh
+
+echo 'env $(cat /home/'${USER}'/'${SUBDIR}'/.env) /usr/local/bin/docker-compose -f /home/'${USER}'/'${SUBDIR}'/docker-compose.yml down' > stack_down.sh
+chmod 755 stack_down.sh
+
 echo -e "port 1883
 log_dest file /mosquitto/log/mosquitto.log
 log_timestamp_format %Y-%m-%d %H:%M:%S

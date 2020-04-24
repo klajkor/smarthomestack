@@ -14,4 +14,9 @@
 mosquitto/log/mosquitto.log
 portainer/data/**
 homeassistant/.storage/**
+homeassistant/.cloud/**
+homeassistant/deps/**
+homeassistant/tts/**
 tasmotizer.cfg
+grafana/plugins/**
+grafana/png/**

@@ -4,7 +4,8 @@
 #
 USER=`id -un`
 USERID=`id -u`
-GROUPID=`id -u`
+#Docker group ID
+GROUPID=`getent group docker | cut -d: -f3`
 SUBDIR="smarthomestack"
 
 cd ~/${SUBDIR}
@@ -13,7 +14,7 @@ PGID=${GROUPID}
 TZ=Europe/Budapest
 USERDIR=/home/${USER}
 STACKDIR=/home/${USER}/${SUBDIR}
-" > .env-example
+" > .env
 
 echo "MYSQL_ROOT_PASSWORD=super_password
 " > mysql.env-example

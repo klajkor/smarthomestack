@@ -4,7 +4,7 @@
 #
 
 cd ~/smarthomestack
-if [ !-f pgsql.env ]
+if [ ! -e pgsql.env ]
 then
     cp pgsql.env-example pgsql.env
 fi

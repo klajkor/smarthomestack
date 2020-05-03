@@ -4,7 +4,10 @@
 #
 
 cd ~/smarthomestack
-if !-f pgsql.env cp pgsql.env-example pgsql.env
+if [ !-f pgsql.env ]
+then
+    cp pgsql.env-example pgsql.env
+fi
 
 #clean-up
 docker system prune -f;docker image prune -f;docker volume prune -f

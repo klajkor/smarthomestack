@@ -3,6 +3,9 @@
 # Initial config of Docker Compose
 #
 
+cd ~/smarthomestack
+if !-f pgsql.env cp pgsql.env-example pgsql.env
+
 #clean-up
 docker system prune -f;docker image prune -f;docker volume prune -f
 

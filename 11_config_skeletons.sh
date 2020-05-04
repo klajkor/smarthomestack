@@ -21,6 +21,8 @@ echo "MYSQL_ROOT_PASSWORD=super_password
 
 echo "INFLUXDB_ADMIN_USER=admin
 INFLUXDB_ADMIN_PASSWORD=super_password
+INFLUXDB_TELEGRAF_USER=telegraf
+INFLUXDB_TELEGRAF_PASSWORD=super_telegraf_password
 " > influxdb.env-example
 
 echo "PG_USER=pguser

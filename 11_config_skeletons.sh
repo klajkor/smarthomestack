@@ -19,6 +19,10 @@ STACKDIR=/home/${USER}/${SUBDIR}
 echo "MYSQL_ROOT_PASSWORD=super_password
 " > mysql.env-example
 
+echo "INFLUXDB_ADMIN_USER=admin
+INFLUXDB_ADMIN_PASSWORD=super_password
+" > influxdb.env-example
+
 echo "PG_USER=pguser
 PG_PWD=super_password
 PG_DB=pgdatabase

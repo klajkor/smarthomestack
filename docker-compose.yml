@@ -153,9 +153,9 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - ${STACKDIR}/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf
       - ${STACKDIR}/influxdb/db:/var/lib/influxdb
-#    command: -config /etc/influxdb/influxdb.conf
     env_file:
       - .env
+      - influxdb.env
     environment:
       - TZ=${TZ}
 

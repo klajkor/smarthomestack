@@ -32,6 +32,20 @@ echo -e '
 ##
 ## Telegraf config for smarthomestack 
 ##
+[global_tags]
+#
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = ""
+  omit_hostname = false
+
 [[inputs.mqtt_consumer]]
   servers = ["tcp://mosquitto:1883"]
   qos = 0

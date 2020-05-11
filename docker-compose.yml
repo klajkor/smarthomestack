@@ -31,7 +31,6 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ${STACKDIR}/portainer/data:/data # Change to local directory if you want to save/transfer config locally
-      - ${STACKDIR}/shared:/shared
     env_file:
       - .env
     environment:

@@ -25,6 +25,10 @@ INFLUXDB_TELEGRAF_USER=telegraf
 INFLUXDB_TELEGRAF_PASSWORD=super_telegraf_password
 " > influxdb.env-example
 
+echo "MQTT_USER=MQTT_user
+MQTT_PASSWORD=super_password
+" > mqtt.env-example
+
 echo "PG_USER=pguser
 PG_PWD=super_password
 PG_DB=pgdatabase

@@ -7,11 +7,19 @@ cd ~/smarthomestack
 if [ ! -e pgsql.env ]
 then
     cp pgsql.env-example pgsql.env
+    echo "Don't forget to update pgsql.env file!"
 fi
 
 if [ ! -e influxdb.env ]
 then
     cp influxdb.env-example influxdb.env
+    echo "Don't forget to update influxdb.env file!"
+fi
+
+if [ ! -e mqtt.env ]
+then
+    cp mqtt.env-example mqtt.env
+    echo "Don't forget to update mqtt.env file!"
 fi
 
 #clean-up

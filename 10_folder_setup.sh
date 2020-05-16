@@ -35,9 +35,8 @@ touch ~/${SUBDIR}/mosquitto/log/mosquitto.log
 touch ~/${SUBDIR}/influxdb/influxdb.conf
 touch ~/${SUBDIR}/telegraf/telegraf.conf
 sudo setfacl -Rdm g:docker:rwx ~/${SUBDIR}
-sudo chmod -R ug+rw ~/${SUBDIR}
-sudo chmod -R o+r ~/${SUBDIR}
-sudo chmod -R 664 ~/${SUBDIR}
-sudo chmod -R 775 ~/${SUBDIR}/*.sh
+sudo chmod -R 775 ~/${SUBDIR}
+sudo chmod -R ugo-x,ugo+X ~/${SUBDIR}
+sudo chmod -R ugo+x ~/${SUBDIR}/*.sh
 sudo chown -R ${USER}:docker ~/${SUBDIR}
 

@@ -54,13 +54,12 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - ${STACKDIR}/mosquitto/config:/mosquitto/config
-      - ${STACKDIR}/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - ${STACKDIR}/mosquitto/config/passwd:/mosquitto/config/passwd
       - ${STACKDIR}/mosquitto/data:/mosquitto/data
       - ${STACKDIR}/mosquitto/log:/mosquitto/log
       - ${STACKDIR}/shared:/shared
     env_file:
       - .env
+      - mqtt.env
     environment:
       PUID: $PUID
       PGID: $PGID

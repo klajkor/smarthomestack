@@ -24,7 +24,7 @@ services:
     networks:
       - backend
     security_opt:
-      - no-new-privileges:true
+      - apparmor:unconfined
     ports:
       - "9000:9000"
     volumes:
@@ -44,8 +44,7 @@ services:
     user: "$PUID:$PGID"
     restart: unless-stopped
     security_opt:
-      - no-new-privileges:true
-      - label:disable
+      - apparmor:unconfined
     networks:
       - backend
     ports:
@@ -117,7 +116,7 @@ services:
     networks:
       - backend
     security_opt:
-      - no-new-privileges:true
+      - apparmor:unconfined
     ports:
       - "3000:3000"
     user: "0"
@@ -142,8 +141,7 @@ services:
     container_name: influxdb
     restart: always
     security_opt:
-      - no-new-privileges:true
-      - label:disable
+      - apparmor:unconfined
     networks:
       - backend
     ports:

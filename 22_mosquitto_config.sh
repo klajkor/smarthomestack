@@ -19,13 +19,13 @@ set +o allexport
 
 docker-compose -f docker-compose.yml down
 
-docker-compose -f docker-compose.yml up -d influxdb
+docker-compose -f docker-compose.yml up -d mosquitto
 
-docker run --rm eclipse-mosquitto sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"
-docker run --rm eclipse-mosquitto sh -c "cat /mosquitto/config/passwd"
+#docker run --rm eclipse-mosquitto sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"
+#docker run --rm eclipse-mosquitto sh -c "cat /mosquitto/config/passwd"
 
-#docker-compose exec mosquitto sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"
-#docker-compose exec mosquitto sh -c "cat /mosquitto/config/passwd"
+docker-compose exec mosquitto sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"
+docker-compose exec mosquitto sh -c "cat /mosquitto/config/passwd"
 
 docker-compose -f docker-compose.yml down
 

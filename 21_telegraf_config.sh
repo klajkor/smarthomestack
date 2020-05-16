@@ -24,7 +24,7 @@ set +o allexport
 
 docker-compose -f docker-compose.yml down
 
-docker run --rm telegraf telegraf config > ~/smarthomestack/telegraf/telegraf.conf
+docker run --rm telegraf:1.14.2 telegraf config > ~/smarthomestack/telegraf/telegraf.conf
 
 mv  ~/smarthomestack/telegraf/telegraf.conf  ~/smarthomestack/telegraf/telegraf.conf-original
 

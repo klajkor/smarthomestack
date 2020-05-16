@@ -46,6 +46,18 @@ echo -e '
   hostname = ""
   omit_hostname = false
 
+
+[[outputs.influxdb]]
+  urls = ["http://influxdb:8086"]
+  database = "sensors"
+  skip_database_creation = true
+  retention_policy = ""
+  write_consistency = "any"
+  username = "'${INFLUXDB_TELEGRAF_USER}'"
+  password = "'${INFLUXDB_TELEGRAF_PASSWORD}'"
+  user_agent = "telegraf"
+
+
 [[inputs.mqtt_consumer]]
   servers = ["tcp://mosquitto:1883"]
   qos = 0
@@ -85,17 +97,6 @@ echo -e '
   username = "'${MQTT_USER}'"
   password = "'${MQTT_PASSWORD}'"
 
-
-
-[[outputs.influxdb]]
-  urls = ["http://influxdb:8086"]
-  database = "sensors"
-  skip_database_creation = true
-  retention_policy = ""
-  write_consistency = "any"
-  username = "'${INFLUXDB_TELEGRAF_USER}'"
-  password = "'${INFLUXDB_TELEGRAF_PASSWORD}'"
-  user_agent = "telegraf"
 ' > ~/smarthomestack/telegraf/telegraf.conf
 
 docker-compose -f docker-compose.yml down

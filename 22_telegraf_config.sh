@@ -3,7 +3,9 @@
 # Initial config of Telegraf
 #
 
-cd ~/smarthomestack
+STACKDIR=${HOME}/smarthomestack
+
+cd ${STACKDIR}
 
 if [ ! -e influxdb.env ]
 then
@@ -22,12 +24,17 @@ source mqtt.env
 source influxdb.env
 set +o allexport
 
+telegraf_image=`grep "image: telegraf" docker-compose.yml | awk -F":" '{print $2":"$3}'`
+
+echo "Compose down"
 docker-compose -f docker-compose.yml down
 
-docker run --rm telegraf:1.14.2 telegraf config > ~/smarthomestack/telegraf/telegraf.conf
+echo "Creating base config file"
+docker run --rm ${telegraf_image} telegraf config > ${STACKDIR}/telegraf/telegraf.conf
 
-mv  ~/smarthomestack/telegraf/telegraf.conf  ~/smarthomestack/telegraf/telegraf.conf-original
+mv  ${STACKDIR}/telegraf/telegraf.conf  ${STACKDIR}/telegraf/telegraf.conf-original
 
+echo "Creating real config file"
 echo -e '
 ##
 ## Telegraf config for smarthomestack 
@@ -97,6 +104,7 @@ echo -e '
   username = "'${MQTT_USER}'"
   password = "'${MQTT_PASSWORD}'"
 
-' > ~/smarthomestack/telegraf/telegraf.conf
+' > ${STACKDIR}/telegraf/telegraf.conf
 
+echo "Compose down"
 docker-compose -f docker-compose.yml down

@@ -143,6 +143,7 @@ services:
     restart: always
     security_opt:
       - no-new-privileges:true
+      - label:disable
     networks:
       - backend
     ports:

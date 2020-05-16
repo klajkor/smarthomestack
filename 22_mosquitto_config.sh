@@ -21,12 +21,14 @@ docker-compose -f docker-compose.yml down
 
 docker-compose -f docker-compose.yml up -d influxdb
 
-docker-compose exec mosquitto sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"
-docker-compose exec mosquitto sh -c "cat /mosquitto/config/passwd"
+docker run --rm eclipse-mosquitto sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"
+docker run --rm eclipse-mosquitto sh -c "cat /mosquitto/config/passwd"
+
+#docker-compose exec mosquitto sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"
+#docker-compose exec mosquitto sh -c "cat /mosquitto/config/passwd"
 
 docker-compose -f docker-compose.yml down
 
 echo 'mqtt: !include mqtt_config.yaml' >> ${STACKDIR}/homeassistant/configuration.yaml
 echo 'sensor: !include sensor_config.yaml' >> ${STACKDIR}/homeassistant/configuration.yaml
 
-docker-compose -f docker-compose.yml down

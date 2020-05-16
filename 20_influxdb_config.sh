@@ -20,6 +20,7 @@ docker run --rm -p 8086:8086 ${influxdb_image} influxd config > ${STACKDIR}/infl
 
 echo "Changing influxdb.conf file"
 sed -i 's/^\(  auth-enabled\s*=\s*\).*$/\1true/' ${STACKDIR}/influxdb/influxdb.conf
+sudo chown -R ${USER}:docker ${STACKDIR}/influxdb/influxdb.conf
 
 echo "Init influxdb"
 docker run --rm -e INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER} -e INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD} -v ${STACKDIR}/influxdb/db:/var/lib/influxdb ${influxdb_image} /init-influxdb.sh

@@ -35,8 +35,8 @@ docker run --rm -v ${STACKDIR}/mosquitto/config:/mosquitto/config -v ${STACKDIR}
 echo "Starting up image ${mosquitto_image}"
 docker-compose -f docker-compose.yml up -d mosquitto
 
-echo "Show some logs"
-docker-compose -f docker-compose.yml logs --tail=50
+echo "Show some logs, press Ctrl-C to quit from logs"
+docker-compose -f docker-compose.yml logs --tail=50 -f
 
 echo "Shutting down container(s)"
 docker-compose -f docker-compose.yml down

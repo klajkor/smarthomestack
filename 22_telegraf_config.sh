@@ -105,6 +105,7 @@ echo -e '
   password = "'${MQTT_PASSWORD}'"
 
 ' > ${STACKDIR}/telegraf/telegraf.conf
+sudo chown -R ${USER}:docker ${STACKDIR}/telegraf/telegraf.conf
 
 echo "Compose down"
 docker-compose -f docker-compose.yml down

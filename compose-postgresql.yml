@@ -5,7 +5,7 @@ postgres:
     image: postgres:9.6.18-alpine
     restart: always
     security_opt:
-      - no-new-privileges:true
+      - apparmor:unconfined
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - ${STACKDIR}/postgresql/data:/var/lib/postgresql/data

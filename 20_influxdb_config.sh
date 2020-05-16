@@ -13,7 +13,7 @@ docker run --rm -p 8086:8086 influxdb influxd config > ~/smarthomestack/influxdb
 
 sed -i 's/^\(  auth-enabled\s*=\s*\).*$/\1true/' ~/smarthomestack/influxdb/influxdb.conf
 
-docker run --rm -e INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER} -e INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD} -v ~/smarthomestack/influxdb/db:/var/lib/influxdb influxdb /init-influxdb.sh
+docker run --rm -e INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER} -e INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD} -v ~/smarthomestack/influxdb/db:/var/lib/influxdb influxdb:1.8.0 /init-influxdb.sh
 
 docker-compose -f docker-compose.yml up -d influxdb
 

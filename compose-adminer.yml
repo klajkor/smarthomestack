@@ -1,0 +1,16 @@
+# docker compose service snippet - not intended for standalone use
+# Adminer - SQL DB front-end
+adminer:
+    container_name: adminer
+    image: adminer:latest
+    restart: unless-stopped
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+    networks:
+      - backend
+    ports:
+      - 9080:8080
+    env_file:
+      - .env
+    environment:
+      - TZ=${TZ}

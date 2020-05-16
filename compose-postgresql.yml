@@ -1,0 +1,24 @@
+# docker compose service snippet - not intended for standalone use
+# Postgres - Database
+postgres:
+    container_name: postgres
+    image: postgres:9.6.18-alpine
+    restart: always
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ${STACKDIR}/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+      - pgsql.env
+    environment:
+      POSTGRES_PASSWORD: $PG_PWD
+      POSTGRES_USER: $PG_USER
+      POSTGRES_DB: $PG_DB
+    environment:
+      - TZ=${TZ}

@@ -157,46 +157,6 @@ services:
     environment:
       - TZ=${TZ}
 
-# Postgres - Database
-  postgres:
-    container_name: postgres
-    image: postgres:9.6.18-alpine
-    restart: always
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-      - ${STACKDIR}/postgresql/data:/var/lib/postgresql/data
-    networks:
-      - backend
-    ports:
-      - "5432:5432"
-    env_file:
-      - .env
-      - pgsql.env
-    environment:
-      POSTGRES_PASSWORD: $PG_PWD
-      POSTGRES_USER: $PG_USER
-      POSTGRES_DB: $PG_DB
-    environment:
-      - TZ=${TZ}
-
-# Adminer - SQL DB front-end
-  adminer:
-    container_name: adminer
-    image: adminer:latest
-    restart: unless-stopped
-    volumes:
-      - /etc/timezone:/etc/timezone:ro
-    networks:
-      - backend
-    ports:
-      - 9080:8080
-    env_file:
-      - .env
-    environment:
-      - TZ=${TZ}
-
 #Netdata hardware monitoring
   netdata:
     container_name: netdata

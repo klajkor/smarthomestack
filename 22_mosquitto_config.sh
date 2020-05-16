@@ -21,6 +21,9 @@ docker-compose -f docker-compose.yml down
 
 #docker-compose -f docker-compose.yml up -d mosquitto
 
+touch ${STACKDIR}/mosquitto/config/passwd
+touch ${STACKDIR}/mosquitto/log/mosquitto.log
+
 docker run --rm -v ${STACKDIR}/mosquitto/config:/mosquitto/config -v ${STACKDIR}/mosquitto/log:/mosquitto/log eclipse-mosquitto:1.6.9 sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"
 docker run --rm -v ${STACKDIR}/mosquitto/config:/mosquitto/config -v ${STACKDIR}/mosquitto/log:/mosquitto/log eclipse-mosquitto:1.6.9 sh -c "cat /mosquitto/config/passwd"
 

@@ -11,11 +11,13 @@ set -o allexport
 source influxdb.env
 set +o allexport
 
-docker run --rm -p 8086:8086 influxdb influxd config > ${STACKDIR}/influxdb/influxdb.conf
+influxdb_image=`grep "image: influxdb" docker-compose.yml | awk -F":" '{print $2":"$3}'`
+
+docker run --rm -p 8086:8086 ${influxdb_image} influxd config > ${STACKDIR}/influxdb/influxdb.conf
 
 sed -i 's/^\(  auth-enabled\s*=\s*\).*$/\1true/' ${STACKDIR}/influxdb/influxdb.conf
 
-docker run --rm -e INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER} -e INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD} -v ${STACKDIR}/influxdb/db:/var/lib/influxdb influxdb:1.8.0 /init-influxdb.sh
+docker run --rm -e INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER} -e INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD} -v ${STACKDIR}/influxdb/db:/var/lib/influxdb ${influxdb_image} /init-influxdb.sh
 
 docker-compose -f docker-compose.yml up -d influxdb
 

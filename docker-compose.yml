@@ -160,7 +160,7 @@ services:
 # Postgres - Database
   postgres:
     container_name: postgres
-    image: postgres::9.6.18-alpine
+    image: postgres:9.6.18-alpine
     restart: always
     security_opt:
       - no-new-privileges:true

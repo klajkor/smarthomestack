@@ -19,7 +19,7 @@ set +o allexport
 
 docker-compose -f docker-compose.yml down
 
-docker-compose -f docker-compose.yml up -d mosquitto
+docker-compose -f docker-compose.yml up -d
 
 #docker run --rm eclipse-mosquitto sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"
 #docker run --rm eclipse-mosquitto sh -c "cat /mosquitto/config/passwd"

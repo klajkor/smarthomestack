@@ -58,18 +58,9 @@ echo -e "
 " > ~/${SUBDIR}/homeassistant/mqtt_config.yaml-example
 
 echo -e '
-  - platform: mqtt
-    name: "Test temperature"
-    state_topic: "tele/test_sensor/SENSOR"
-    unit_of_measurement: '°C'
-    device_class: "temperature"
-    value_template: "{{ value_json.SI7021.Temperature }}"
-  - platform: mqtt
-    name: "Test humidity"
-    state_topic: "tele/test_sensor/SENSOR"
-    unit_of_measurement: '%'
-    device_class: "humidity"
-    value_template: "{{ value_json.SI7021.Humidity }}"
-' > ~/${SUBDIR}/homeassistant/sensor_config.yaml
+mqtt: !include mqtt_config.yaml
+sensor: !include sensor_config.yaml
+switch: !include switch_config.yaml
+' > ~/${SUBDIR}/homeassistant/configuration.yaml
 
 

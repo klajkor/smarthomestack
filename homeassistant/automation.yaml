@@ -1,0 +1,9 @@
+
+  - alias: 'Switch on Solenoid 1'
+    #sensor.soil_sensor_02_0_moist02_unit
+    trigger:
+      platform: mqtt
+      topic: tele/moist02/SENSOR
+      # Optional
+      payload: "on"
+      encoding: "utf-8"

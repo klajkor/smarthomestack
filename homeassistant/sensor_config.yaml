@@ -12,14 +12,38 @@
     device_class: "humidity"
     value_template: "{{ value_json.SI7021.Humidity }}"
   - platform: mqtt
-    name: "Moist02 Air Temperature"
+    name: "Air Temperature - Moist02 Unit "
     state_topic: "tele/moist02/SENSOR"
     unit_of_measurement: '°C'
     device_class: "temperature"
     value_template: "{{ value_json.SI7021.Temperature }}"
   - platform: mqtt
-    name: "Moist02 Air Humidity"
+    name: "Air Humidity - Moist02 Unit "
     state_topic: "tele/moist02/SENSOR"
     unit_of_measurement: '%'
     device_class: "humidity"
     value_template: "{{ value_json.SI7021.Humidity }}"
+  - platform: mqtt
+    name: "Soil sensor 01-0 (Moist01 Unit)"
+    state_topic: "tele/moist01/SENSOR"
+    unit_of_measurement: '%'
+    device_class: "humidity"
+    value_template: "{{ value_json.SoilMoist0 }}"
+  - platform: mqtt
+    name: "Soil sensor 01-1 (Moist01 Unit)"
+    state_topic: "tele/moist01/SENSOR"
+    unit_of_measurement: '%'
+    device_class: "humidity"
+    value_template: "{{ value_json.SoilMoist1 }}"
+  - platform: mqtt
+    name: "Soil sensor 02-0 (Moist02 Unit)"
+    state_topic: "tele/moist02/SENSOR"
+    unit_of_measurement: '%'
+    device_class: "humidity"
+    value_template: "{{ value_json.SoilMoist0 }}"
+  - platform: mqtt
+    name: "Soil sensor 02-1 (Moist02 Unit)"
+    state_topic: "tele/moist02/SENSOR"
+    unit_of_measurement: '%'
+    device_class: "humidity"
+    value_template: "{{ value_json.SoilMoist1 }}"

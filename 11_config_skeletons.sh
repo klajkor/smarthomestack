@@ -57,10 +57,30 @@ echo -e "
   discovery_prefix: homeassistant
 " > ~/${SUBDIR}/homeassistant/mqtt_config.yaml-example
 
+TS=$(date +"%Y%m%d%H%M%S")
+
+if [ ! -e ~/${SUBDIR}/homeassistant/configuration.yaml ]
+then
+    cp ~/${SUBDIR}/homeassistant/configuration.yaml ~/${SUBDIR}/homeassistant/configuration.yaml_${TS}
+fi
+
 echo -e '
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
 mqtt: !include mqtt_config.yaml
 sensor: !include sensor_config.yaml
 switch: !include switch_config.yaml
+
 ' > ~/${SUBDIR}/homeassistant/configuration.yaml
 
 

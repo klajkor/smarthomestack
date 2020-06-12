@@ -5,12 +5,7 @@ stack_down.sh
 **/mqtt_config.yaml
 **/grafana.db
 **/.HA_VERSION
-**/automations.yaml
 **/configuration.yaml
-**/groups.yaml
-**/scenes.yaml
-**/scripts.yaml
-**/secrets.yaml
 **/home-assistant*.db
 **/mosquitto*.db
 mosquitto/log/mosquitto.log

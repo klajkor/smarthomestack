@@ -26,11 +26,17 @@ INFLUXDB_TELEGRAF_USER=telegraf
 INFLUXDB_TELEGRAF_PASSWORD=super_telegraf_password
 " > influxdb.env-example
 echo "Please don't forget to create a valid influxdb.env with proper credentials"
+echo "Copy the example file: cp influxdb.env-example influxdb.env"
+echo "Then edit it: vi influxdb.env OR nano influxdb.env"
+echo " "
 
 echo "MQTT_USER=MQTT_user
 MQTT_PASSWORD=super_password
 " > mqtt.env-example
 echo "Please don't forget to create a valid mqtt.env with proper credentials"
+echo "Copy the example file: cp mqtt.env-example mqtt.env"
+echo "Then edit it: vi mqtt.env OR nano mqtt.env"
+echo " "
 
 echo "PG_USER=pguser
 PG_PWD=super_password
@@ -59,7 +65,11 @@ echo -e "
   discovery: true
   discovery_prefix: homeassistant
 " > ~/${SUBDIR}/homeassistant/mqtt_config.yaml-example
-echo "Please don't forget to create a valid ${STACKDIR}/homeassistant/mqtt_config.yaml with proper credentials"
+echo "Please don't forget to create a valid ./homeassistant/mqtt_config.yaml with proper credentials"
+echo "Go to subdirectory: cd ./homeassistant"
+echo "Copy the example file: cp mqtt_config.yaml-example mqtt_config.yaml"
+echo "Then edit it: vi mqtt_config.yaml OR nano mqtt_config.yaml"
+echo " "
 
 TS=$(date +"%Y%m%d%H%M%S")
 

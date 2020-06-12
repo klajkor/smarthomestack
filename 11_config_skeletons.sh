@@ -7,6 +7,7 @@ USERID=`id -u`
 #Docker group ID
 GROUPID=`getent group docker | cut -d: -f3`
 SUBDIR="smarthomestack"
+STACKDIR=/home/${USER}/${SUBDIR}
 
 cd ~/${SUBDIR}
 echo "PUID=${USERID}
@@ -24,10 +25,12 @@ INFLUXDB_ADMIN_PASSWORD=super_password
 INFLUXDB_TELEGRAF_USER=telegraf
 INFLUXDB_TELEGRAF_PASSWORD=super_telegraf_password
 " > influxdb.env-example
+echo "Please don't forget to create a valid influxdb.env with proper credentials"
 
 echo "MQTT_USER=MQTT_user
 MQTT_PASSWORD=super_password
 " > mqtt.env-example
+echo "Please don't forget to create a valid mqtt.env with proper credentials"
 
 echo "PG_USER=pguser
 PG_PWD=super_password
@@ -56,6 +59,7 @@ echo -e "
   discovery: true
   discovery_prefix: homeassistant
 " > ~/${SUBDIR}/homeassistant/mqtt_config.yaml-example
+echo "Please don't forget to create a valid ${STACKDIR}/homeassistant/mqtt_config.yaml with proper credentials"
 
 TS=$(date +"%Y%m%d%H%M%S")
 

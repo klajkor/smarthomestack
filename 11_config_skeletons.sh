@@ -59,7 +59,7 @@ echo -e "
 
 TS=$(date +"%Y%m%d%H%M%S")
 
-if [ ! -e ~/${SUBDIR}/homeassistant/configuration.yaml ]
+if [ -e ~/${SUBDIR}/homeassistant/configuration.yaml ]
 then
     cp ~/${SUBDIR}/homeassistant/configuration.yaml ~/${SUBDIR}/homeassistant/configuration.yaml_${TS}
 fi

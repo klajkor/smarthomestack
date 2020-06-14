@@ -1,0 +1,90 @@
+- id: '0001'
+  alias: Irrigation 0600 UTC
+  description: Irrigation from 06:00 till 06:05 UTC
+  trigger:
+  - at: '06:00:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: '00:05:00'
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off
+- id: '0002'
+  alias: Irrigation 0800 UTC
+  description: Irrigation from 08:00 till 08:05 UTC
+  trigger:
+  - at: '08:00:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: '00:05:00'
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off
+- id: '0003'
+  alias: Irrigation 1030 UTC
+  description: Irrigation from 10:30 till 08:05 UTC
+  trigger:
+  - at: '10:30:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: '00:05:00'
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off
+- id: '0004'
+  alias: Irrigation 1230 UTC
+  description: Irrigation from 12:30 till 08:05 UTC
+  trigger:
+  - at: '12:30:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: '00:05:00'
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off
+- id: '0005'
+  alias: Irrigation 1430 UTC
+  description: Irrigation from 14:30 till 08:05 UTC
+  trigger:
+  - at: '14:30:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: '00:05:00'
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off
+- id: '0006'
+  alias: Irrigation 1630 UTC
+  description: Irrigation from 16:30 till 08:05 UTC
+  trigger:
+  - at: '16:30:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: '00:05:00'
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off

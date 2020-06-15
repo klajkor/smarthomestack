@@ -1,1 +1,24 @@
-#automations.yaml
+# Automation example
+
+- id: '0001'
+  alias: Daily Irrigation Routine
+  description: 08:00, 10:00, 12:30, 14:30, 16:30, 18:30
+  trigger:
+  - at: '08:00:00'
+    platform: time
+  - at: '10:00:00'
+    platform: time
+  - at: '12:30:00'
+    platform: time
+  - at: '14:30:00'
+    platform: time
+  - at: '16:30:00'
+    platform: time
+  - at: '18:30:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: script.zone_1_irrigation_for_5_min
+    service: script.turn_on
+

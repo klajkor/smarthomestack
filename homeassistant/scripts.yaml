@@ -1,0 +1,34 @@
+# scripts example
+
+zone_1_irrigation_for_10_min:
+  alias: 'Zone #1 irrigation for 10 minutes'
+  sequence:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: 00:10:00
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off
+
+zone_1_irrigation_for_5_min:
+  alias: 'Zone #1 irrigation for 5 minutes'
+  sequence:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: 00:05:00
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off
+
+zone_1_irrigation_for_2_min:
+  alias: 'Zone #1 irrigation for 2 minutes'
+  sequence:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: 00:02:00
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off

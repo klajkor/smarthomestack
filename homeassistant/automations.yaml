@@ -22,3 +22,39 @@
     entity_id: script.zone_1_irrigation_for_5_min
     service: script.turn_on
 
+- id: '0002'
+  alias: Daily Irrigation Routine - 3 times
+  description: 08:00, 12:30, 16:30
+  initial_state: false
+  trigger:
+  - at: '08:00:00'
+    platform: time
+  - at: '12:30:00'
+    platform: time
+  - at: '16:30:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: script.zone_1_irrigation_for_5_min
+    service: script.turn_on
+
+- id: '0003'
+  alias: Daily Irrigation Routine - 4 times
+  description: 08:00, 12:30, 14:30, 16:30
+  initial_state: false
+  trigger:
+  - at: '08:00:00'
+    platform: time
+  - at: '12:30:00'
+    platform: time
+  - at: '14:30:00'
+    platform: time
+  - at: '16:30:00'
+    platform: time
+  condition: []
+  action:
+  - data: {}
+    entity_id: script.zone_1_irrigation_for_5_min
+    service: script.turn_on
+  

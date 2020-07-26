@@ -32,3 +32,34 @@ zone_1_irrigation_for_2_min:
   - data: {}
     entity_id: switch.relay_solenoid_1
     service: switch.turn_off
+
+zone_1_irrigation_for_2_min_30_sec:
+  alias: 'Zone #1 irrigation for 2 minutes 30 secs'
+  sequence:
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: 00:02:30
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off
+
+zone_1_irrigation_for_5_min_if_needed:
+  alias: 'Zone #1 irrigation for 5 minutes if Moist01 moisture is below 75%'
+  sequence:
+  - condition: or
+    conditions:
+    - below: '75'
+      condition: numeric_state
+      entity_id: sensor.soil_sensor_01_0_moist01_unit
+    - below: '75'
+      condition: numeric_state
+      entity_id: sensor.soil_sensor_01_1_moist01_unit
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_on
+  - delay: 00:05:00
+  - data: {}
+    entity_id: switch.relay_solenoid_1
+    service: switch.turn_off
+    

@@ -4,45 +4,61 @@ zone_1_irrigation_for_10_min:
   alias: 'Zone #1 irrigation for 10 minutes'
   sequence:
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_on
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
   - delay: 00:10:00
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_off
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
 
 zone_1_irrigation_for_5_min:
   alias: 'Zone #1 irrigation for 5 minutes'
   sequence:
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_on
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
   - delay: 00:05:00
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_off
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
 
 zone_1_irrigation_for_2_min:
   alias: 'Zone #1 irrigation for 2 minutes'
   sequence:
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_on
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
   - delay: 00:02:00
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_off
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
 
 zone_1_irrigation_for_2_min_30_sec:
   alias: 'Zone #1 irrigation for 2 minutes 30 secs'
   sequence:
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_on
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
   - delay: 00:02:30
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_off
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
 
 zone_1_irrigation_for_5_min_if_needed:
   alias: 'Zone #1 irrigation for 5 minutes if Moist01 moisture is below 75%'
@@ -56,10 +72,73 @@ zone_1_irrigation_for_5_min_if_needed:
       condition: numeric_state
       entity_id: sensor.soil_sensor_01_1_moist01_unit
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_on
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
   - delay: 00:05:00
   - data: {}
-    entity_id: switch.relay_solenoid_1
     service: switch.turn_off
+    entity_id: 
+      - switch.relay_solenoid_1
+      - switch.relay_solenoid_2
     
+zone_2_irrigation_for_10_min:
+  alias: 'Zone #2 irrigation for 10 minutes'
+  sequence:
+  - data: {}
+    service: switch.turn_on
+    entity_id: 
+      - switch.relay2_solenoid_1
+      - switch.relay2_solenoid_2
+  - delay: 00:10:00
+  - data: {}
+    service: switch.turn_off
+    entity_id: 
+      - switch.relay2_solenoid_1
+      - switch.relay2_solenoid_2
+
+zone_2_irrigation_for_5_min:
+  alias: 'Zone #2 irrigation for 5 minutes'
+  sequence:
+  - data: {}
+    service: switch.turn_on
+    entity_id: 
+      - switch.relay2_solenoid_1
+      - switch.relay2_solenoid_2
+  - delay: 00:05:00
+  - data: {}
+    service: switch.turn_off
+    entity_id: 
+      - switch.relay2_solenoid_1
+      - switch.relay2_solenoid_2
+
+zone_2_irrigation_for_2_min:
+  alias: 'Zone #2 irrigation for 2 minutes'
+  sequence:
+  - data: {}
+    service: switch.turn_on
+    entity_id: 
+      - switch.relay2_solenoid_1
+      - switch.relay2_solenoid_2
+  - delay: 00:02:00
+  - data: {}
+    service: switch.turn_off
+    entity_id: 
+      - switch.relay2_solenoid_1
+      - switch.relay2_solenoid_2
+
+zone_2_irrigation_for_2_min_30_sec:
+  alias: 'Zone #2 irrigation for 2 minutes 30 secs'
+  sequence:
+  - data: {}
+    service: switch.turn_on
+    entity_id: 
+      - switch.relay2_solenoid_1
+      - switch.relay2_solenoid_2
+  - delay: 00:02:30
+  - data: {}
+    service: switch.turn_off
+    entity_id: 
+      - switch.relay2_solenoid_1
+      - switch.relay2_solenoid_2

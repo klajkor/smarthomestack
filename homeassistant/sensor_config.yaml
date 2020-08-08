@@ -12,14 +12,14 @@
     device_class: "humidity"
     value_template: "{{ value_json.SI7021.Humidity }}"
   - platform: mqtt
-    name: "Air Temperature - Moist02 Unit "
-    state_topic: "tele/moist02/SENSOR"
+    name: "Air Temperature - Moist01 Unit "
+    state_topic: "tele/moist01/SENSOR"
     unit_of_measurement: '°C'
     device_class: "temperature"
     value_template: "{{ value_json.SI7021.Temperature }}"
   - platform: mqtt
-    name: "Air Humidity - Moist02 Unit "
-    state_topic: "tele/moist02/SENSOR"
+    name: "Air Humidity - Moist01 Unit "
+    state_topic: "tele/moist01/SENSOR"
     unit_of_measurement: '%'
     device_class: "humidity"
     value_template: "{{ value_json.SI7021.Humidity }}"

@@ -82,6 +82,7 @@ zone_1_irrigation_for_5_min_if_needed:
     entity_id: 
       - switch.relay_solenoid_1
       - switch.relay_solenoid_2
+  
     
 zone_2_irrigation_for_10_min:
   alias: 'Zone #2 irrigation for 10 minutes'
@@ -92,6 +93,11 @@ zone_2_irrigation_for_10_min:
       - switch.relay2_solenoid_1
       - switch.relay2_solenoid_2
   - delay: 00:10:00
+  - data: {}
+    service: switch.turn_off
+    entity_id: 
+      - switch.relay2_solenoid_1
+  - delay: 00:00:30
   - data: {}
     service: switch.turn_off
     entity_id: 
@@ -111,6 +117,11 @@ zone_2_irrigation_for_5_min:
     service: switch.turn_off
     entity_id: 
       - switch.relay2_solenoid_1
+  - delay: 00:00:30
+  - data: {}
+    service: switch.turn_off
+    entity_id: 
+      - switch.relay2_solenoid_1
       - switch.relay2_solenoid_2
 
 zone_2_irrigation_for_2_min:
@@ -126,6 +137,11 @@ zone_2_irrigation_for_2_min:
     service: switch.turn_off
     entity_id: 
       - switch.relay2_solenoid_1
+  - delay: 00:00:30
+  - data: {}
+    service: switch.turn_off
+    entity_id: 
+      - switch.relay2_solenoid_1
       - switch.relay2_solenoid_2
 
 zone_2_irrigation_for_2_min_30_sec:
@@ -137,6 +153,11 @@ zone_2_irrigation_for_2_min_30_sec:
       - switch.relay2_solenoid_1
       - switch.relay2_solenoid_2
   - delay: 00:02:30
+  - data: {}
+    service: switch.turn_off
+    entity_id: 
+      - switch.relay2_solenoid_1
+  - delay: 00:00:30
   - data: {}
     service: switch.turn_off
     entity_id: 

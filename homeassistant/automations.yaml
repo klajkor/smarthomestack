@@ -19,8 +19,9 @@
   condition: []
   action:
   - data: {}
-    entity_id: script.zone_1_irrigation_for_10_min
+    entity_id: script.zone_1_irrigation_for_5_min
     service: script.turn_on
+  mode: single
 
 - id: '0012'
   alias: Daily Irrigation Routine - Zone 2
@@ -43,6 +44,7 @@
   condition: []
   action:
   - data: {}
-    entity_id: script.zone_2_irrigation_for_10_min
+    entity_id: script.zone_2_irrigation_for_2_min
     service: script.turn_on
+  mode: single
 

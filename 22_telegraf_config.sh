@@ -42,7 +42,7 @@ echo -e '
 [global_tags]
 #
 [agent]
-  interval = "10s"
+  interval = "60s"
   round_interval = true
   metric_batch_size = 1000
   metric_buffer_limit = 10000

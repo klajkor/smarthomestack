@@ -100,6 +100,7 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - ${STACKDIR}/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ${STACKDIR}/telegraf/telegraf.log:/telegraf.log
     depends_on:
       - influxdb
       - mosquitto

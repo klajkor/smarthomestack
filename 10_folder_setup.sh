@@ -34,6 +34,8 @@ touch ~/${SUBDIR}/mosquitto/config/passwd
 touch ~/${SUBDIR}/mosquitto/log/mosquitto.log
 touch ~/${SUBDIR}/influxdb/influxdb.conf
 touch ~/${SUBDIR}/telegraf/telegraf.conf
+# for accessing telegraf log from outside
+touch ~/${SUBDIR}/telegraf/telegraf.log
 sudo setfacl -Rdm g:docker:rwx ~/${SUBDIR}
 sudo chmod -R 775 ~/${SUBDIR}
 sudo chmod -R ugo-x,ugo+X ~/${SUBDIR}

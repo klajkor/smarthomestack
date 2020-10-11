@@ -1,0 +1,25 @@
+# docker compose service snippet - not intended for standalone use
+#Netdata hardware monitoring
+netdata:
+  container_name: netdata
+  image: netdata/netdata:latest
+  #hostname: example.com # set to fqdn of host
+  ports:
+    - 19999:19999
+  cap_add:
+    - SYS_PTRACE
+  security_opt:
+    - apparmor:unconfined
+  volumes:
+    - /proc:/host/proc:ro
+    - /sys:/host/sys:ro
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+  networks:
+    - backend
+  env_file:
+    - .env
+  environment:
+    - PUID=${PUID}
+    - PGID=${PGID}
+    - TZ=${TZ}
+                                      

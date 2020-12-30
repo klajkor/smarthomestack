@@ -108,6 +108,19 @@ echo -e '
   username = "'${MQTT_USER}'"
   password = "'${MQTT_PASSWORD}'"
 
+
+[[inputs.mqtt_consumer]]
+  servers = ["tcp://mosquitto:1883"]
+  persistent_session = false
+  qos = 0
+  connection_timeout = "30s"
+  topics = [ "stat/+/RESULT" ]
+  client_id = "telegraf3"
+  data_format = "value"
+  data_type = "string"
+  username = "'${MQTT_USER}'"
+  password = "'${MQTT_PASSWORD}'"
+
 ' > ${STACKDIR}/telegraf/telegraf.conf
 sudo chown -R ${USER}:docker ${STACKDIR}/telegraf/telegraf.conf
 

@@ -6,7 +6,7 @@ echo "########################################"
 echo "### Testing MQTT Service"
 NETSTAT_MQTT=`netstat -an --tcp|grep -v '1883[0123456789]'|grep 1883|wc -l`
 if [ $NETSTAT_MQTT -gt 0 ] ; then
-  echo "MQTT service is running:"
+  echo "MQTT service is running. Details below."
   echo " "
   echo "### netstat:"
   netstat -an --tcp|grep -v '1883[0123456789]'|grep 1883

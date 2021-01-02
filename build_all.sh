@@ -31,5 +31,5 @@ for SCRIPT in $BUILD_SCRIPTS
 do
   echo "=> Starting ${SCRIPT} script:"
   bash "./${SCRIPT}"
-  read -p "=> Press any key"
+  read -p "=> ${SCRIPT} finished, press any key"
 done

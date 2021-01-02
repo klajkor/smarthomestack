@@ -6,11 +6,11 @@
 STACKDIR=${HOME}/smarthomestack
 
 cd ${STACKDIR}
-if [ ! -e pgsql.env ]
-then
-    cp pgsql.env-example pgsql.env
-    echo "Don't forget to update pgsql.env file!"
-fi
+#if [ ! -e pgsql.env ]
+#then
+#    cp pgsql.env-example pgsql.env
+#    echo "Don't forget to update pgsql.env file!"
+#fi
 
 if [ ! -e influxdb.env ]
 then
@@ -24,17 +24,22 @@ then
     echo "Don't forget to update mqtt.env file!"
 fi
 
-#clean-up
+COMPOSE_FILE = "${STACKDIR}/docker-compose.yml"
+echo "docker clean-up"
 docker system prune -f;docker image prune -f;docker volume prune -f
 
-#Initiate downloading of docker images from Docker Hub
-docker-compose -f ${STACKDIR}/docker-compose.yml pull
+echo "Validating ${COMPOSE_FILE}"
+docker-compose -f $COMPOSE_FILE config
+read -p "=> Validating finished, press any key"
 
-#First run, errors messages expected due to lack of propoer config files
-docker-compose -f ${STACKDIR}/docker-compose.yml up -d
+echo "Initiate downloading of docker images from Docker Hub"
+docker-compose -f $COMPOSE_FILE pull
 
-#Stopping all containers
-docker-compose -f ${STACKDIR}/docker-compose.yml down
+echo "First docker-compose run, errors messages expected due to lack of proper config files"
+docker-compose -f $COMPOSE_FILE up -d
 
-#clean-up
+echo "Stopping all containers"
+docker-compose -f $COMPOSE_FILE down
+
+echo "Docker clean-up again"
 docker system prune -f;docker image prune -f;docker volume prune -f

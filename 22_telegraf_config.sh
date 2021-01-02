@@ -26,15 +26,16 @@ set +o allexport
 
 telegraf_image=`grep "image: telegraf" docker-compose.yml | awk -F":" '{print $2":"$3}'`
 
-echo "Compose down"
+echo "Docker compose down"
 docker-compose -f docker-compose.yml down
 
-echo "Creating base config file"
-docker run --rm ${telegraf_image} telegraf config > ${STACKDIR}/telegraf/telegraf.conf
+CONFIG_FILE = "${STACKDIR}/telegraf/telegraf.conf"
+echo "Creating Telegraf base config file: ${CONFIG_FILE}"
+docker run --rm ${telegraf_image} telegraf config > ${CONFIG_FILE}
 
-mv  ${STACKDIR}/telegraf/telegraf.conf  ${STACKDIR}/telegraf/telegraf.conf-original
+mv  ${CONFIG_FILE}  ${STACKDIR}/telegraf/telegraf.conf-original
 
-echo "Creating real config file"
+echo "Creating real Telegraf config file"
 echo -e '
 ##
 ## Telegraf config for smarthomestack 
@@ -123,8 +124,9 @@ echo -e '
   password = "'${MQTT_PASSWORD}'"
 
 
-' > ${STACKDIR}/telegraf/telegraf.conf
-sudo chown -R ${USER}:docker ${STACKDIR}/telegraf/telegraf.conf
+' > ${CONFIG_FILE}
+echo "Setting file permissions of ${CONFIG_FILE}"
+sudo chown -R ${USER}:docker ${CONFIG_FILE}
 
 echo "Compose down"
 docker-compose -f docker-compose.yml down

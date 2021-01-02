@@ -15,10 +15,10 @@ networks:
 ### SERVICES
 services:
 
-# Portainer - WebUI for Containers
-  portainer:
-    container_name: portainer
-    image: portainer/portainer:latest
+# Portainer CE - WebUI for Containers
+  portainer-ce:
+    container_name: portainer-ce
+    image: portainer/portainer-ce:latest
     restart: unless-stopped
     command: -H unix:///var/run/docker.sock
     networks:
@@ -26,6 +26,7 @@ services:
     security_opt:
       - apparmor:unconfined
     ports:
+      - "8000:8000"
       - "9000:9000"
     volumes:
       - /etc/timezone:/etc/timezone:ro
@@ -44,7 +45,7 @@ services:
 # Create mosquitto.conf, passwd, mosquitto.log files  and set permissions to 775 user:docker
   mosquitto:
     container_name: mosquitto
-    image: eclipse-mosquitto:1.6.9
+    image: eclipse-mosquitto
     user: "$PUID:$PGID"
     restart: unless-stopped
     security_opt:
@@ -108,7 +109,7 @@ services:
 # Telegraf
   telegraf:
     container_name: telegraf
-    image: telegraf:1.14.2
+    image: telegraf
     restart: unless-stopped
     volumes:
       - /etc/timezone:/etc/timezone:ro
@@ -129,7 +130,7 @@ services:
 # Grafana - Graphical data visualization for InfluxDB data
   grafana:
     container_name: grafana
-    image: grafana/grafana:6.7.3
+    image: grafana/grafana
     restart: unless-stopped
     networks:
       - backend
@@ -159,8 +160,8 @@ services:
 # InfluxDB - Database for sensor data
 # Create influxdb.conf first
   influxdb:
-    image: influxdb:1.8.0
     container_name: influxdb
+    image: influxdb
     restart: unless-stopped
     security_opt:
       - apparmor:unconfined

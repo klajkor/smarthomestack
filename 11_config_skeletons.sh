@@ -17,32 +17,6 @@ USERDIR=/home/${USER}
 STACKDIR=/home/${USER}/${SUBDIR}
 " > .env
 
-echo "MYSQL_ROOT_PASSWORD=super_password
-" > mysql.env-example
-
-echo "INFLUXDB_ADMIN_USER=admin
-INFLUXDB_ADMIN_PASSWORD=super_password
-INFLUXDB_TELEGRAF_USER=telegraf
-INFLUXDB_TELEGRAF_PASSWORD=super_telegraf_password
-" > influxdb.env-example
-echo "Please don't forget to create a valid influxdb.env with proper credentials"
-echo "Copy the example file: cp influxdb.env-example influxdb.env"
-echo "Then edit it: vi influxdb.env OR nano influxdb.env"
-echo " "
-
-echo "MQTT_USER=MQTT_user
-MQTT_PASSWORD=super_password
-" > mqtt.env-example
-echo "Please don't forget to create a valid mqtt.env with proper credentials"
-echo "Copy the example file: cp mqtt.env-example mqtt.env"
-echo "Then edit it: vi mqtt.env OR nano mqtt.env"
-echo " "
-
-echo "PG_USER=pguser
-PG_PWD=super_password
-PG_DB=pgdatabase
-" > pgsql.env-example
-
 echo 'env $(cat /home/'${USER}'/'${SUBDIR}'/.env) /usr/local/bin/docker-compose -f /home/'${USER}'/'${SUBDIR}'/docker-compose.yml up -d' > stack_up.sh
 chmod 755 stack_up.sh
 

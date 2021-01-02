@@ -1,0 +1,1 @@
+env $(cat /home/USERNAME/smarthomestack/.env) /usr/local/bin/docker-compose -f /home/USERNAME/smarthomestack/docker-compose.yml down

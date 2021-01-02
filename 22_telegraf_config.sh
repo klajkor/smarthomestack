@@ -111,15 +111,17 @@ echo -e '
 
 [[inputs.mqtt_consumer]]
   servers = ["tcp://mosquitto:1883"]
-  persistent_session = false
   qos = 0
+  persistent_session = false
   connection_timeout = "30s"
-  topics = [ "stat/+/RESULT" ]
+  topics = [ "tele/+/RESULT" ]
   client_id = "telegraf3"
-  data_format = "value"
-  data_type = "string"
+  data_format = "json"
+  json_time_key = "Time"
+  json_time_format ="2006-01-02T15:04:05"
   username = "'${MQTT_USER}'"
   password = "'${MQTT_PASSWORD}'"
+
 
 ' > ${STACKDIR}/telegraf/telegraf.conf
 sudo chown -R ${USER}:docker ${STACKDIR}/telegraf/telegraf.conf

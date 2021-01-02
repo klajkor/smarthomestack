@@ -37,8 +37,8 @@ services:
       - TZ=${TZ}
     logging:
       options:
-      max-size: "5m"
-      max-file: "3"
+        max-size: "5m"
+        max-file: "3"
 
 # Mosquitto - MQTT Broker
 # Create mosquitto.conf, passwd, mosquitto.log files  and set permissions to 775 user:docker
@@ -70,8 +70,8 @@ services:
       TZ: $TZ
     logging:
       options:
-      max-size: "5m"
-      max-file: "3"
+        max-size: "5m"
+        max-file: "3"
 
 # HomeAssistant
   homeassistant:
@@ -102,8 +102,8 @@ services:
       - TZ=${TZ}
     logging:
       options:
-      max-size: "5m"
-      max-file: "3"
+        max-size: "5m"
+        max-file: "3"
 
 # Telegraf
   telegraf:
@@ -123,8 +123,8 @@ services:
       - TZ=${TZ}
     logging:
       options:
-      max-size: "5m"
-      max-file: "3"
+        max-size: "5m"
+        max-file: "3"
 
 # Grafana - Graphical data visualization for InfluxDB data
   grafana:
@@ -151,8 +151,8 @@ services:
       - TZ=${TZ}
     logging:
       options:
-      max-size: "5m"
-      max-file: "3"
+        max-size: "5m"
+        max-file: "3"
 
 ### DATABASE
 
@@ -180,5 +180,5 @@ services:
       - TZ=${TZ}
     logging:
       options:
-      max-size: "5m"
-      max-file: "3"
+        max-size: "5m"
+        max-file: "3"

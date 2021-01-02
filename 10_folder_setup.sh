@@ -44,4 +44,8 @@ sudo chmod -R 775 ~/${SUBDIR}
 sudo chmod -R ugo-x,ugo+X ~/${SUBDIR}
 sudo chmod -R ugo+x ~/${SUBDIR}/*.sh
 sudo chown -R ${USER}:docker ~/${SUBDIR}
+echo "Setting specific mosquitto file permissions"
+sudo chgrp -R 1883 ~/${SUBDIR}/mosquitto
+sudo setfacl -Rdm u:1883:rw ~/${SUBDIR}/mosquitto
+sudo setfacl -Rdm g:1883:rw ~/${SUBDIR}/mosquitto
 

@@ -35,6 +35,10 @@ services:
       - .env
     environment:
       - TZ=${TZ}
+    logging:
+      options:
+      max-size: "5m"
+      max-file: "3"
 
 # Mosquitto - MQTT Broker
 # Create mosquitto.conf, passwd, mosquitto.log files  and set permissions to 775 user:docker
@@ -64,11 +68,15 @@ services:
       PUID: $PUID
       PGID: $PGID
       TZ: $TZ
+    logging:
+      options:
+      max-size: "5m"
+      max-file: "3"
 
 # HomeAssistant
   homeassistant:
     container_name: homeassistant
-    restart: always
+    restart: unless-stopped
     image: homeassistant/home-assistant:stable
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
@@ -92,11 +100,16 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+    logging:
+      options:
+      max-size: "5m"
+      max-file: "3"
 
 # Telegraf
   telegraf:
     container_name: telegraf
     image: telegraf:1.14.2
+    restart: unless-stopped
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - ${STACKDIR}/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
@@ -108,6 +121,10 @@ services:
       - backend
     environment:
       - TZ=${TZ}
+    logging:
+      options:
+      max-size: "5m"
+      max-file: "3"
 
 # Grafana - Graphical data visualization for InfluxDB data
   grafana:
@@ -132,6 +149,10 @@ services:
       GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel"
     environment:
       - TZ=${TZ}
+    logging:
+      options:
+      max-size: "5m"
+      max-file: "3"
 
 ### DATABASE
 
@@ -140,7 +161,7 @@ services:
   influxdb:
     image: influxdb:1.8.0
     container_name: influxdb
-    restart: always
+    restart: unless-stopped
     security_opt:
       - apparmor:unconfined
     networks:
@@ -157,5 +178,7 @@ services:
       - influxdb.env
     environment:
       - TZ=${TZ}
-
- 
+    logging:
+      options:
+      max-size: "5m"
+      max-file: "3"

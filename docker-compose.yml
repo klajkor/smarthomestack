@@ -45,7 +45,7 @@ services:
 # Create mosquitto.conf, passwd, mosquitto.log files  and set permissions to 775 user:docker
   mosquitto:
     container_name: mosquitto
-    image: eclipse-mosquitto
+    image: eclipse-mosquitto:latest
     user: "$PUID:$PGID"
     restart: unless-stopped
     security_opt:
@@ -130,7 +130,7 @@ services:
 # Grafana - Graphical data visualization for InfluxDB data
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:latest
     restart: unless-stopped
     networks:
       - backend
@@ -161,7 +161,7 @@ services:
 # Create influxdb.conf first
   influxdb:
     container_name: influxdb
-    image: influxdb
+    image: influxdb:latest
     restart: unless-stopped
     security_opt:
       - apparmor:unconfined

@@ -24,22 +24,22 @@ then
     echo "Don't forget to update mqtt.env file!"
 fi
 
-COMPOSE_FILE = "${STACKDIR}/docker-compose.yml"
+COMPOSEFILE = ${STACKDIR}/docker-compose.yml
 echo "docker clean-up"
 docker system prune -f;docker image prune -f;docker volume prune -f
 
-echo "Validating ${COMPOSE_FILE}"
-docker-compose -f $COMPOSE_FILE config
+echo "Validating: ${COMPOSEFILE}"
+docker-compose -f ${COMPOSEFILE} config
 read -p "=> Validating finished, press any key"
 
 echo "Initiate downloading of docker images from Docker Hub"
-docker-compose -f $COMPOSE_FILE pull
+docker-compose -f ${COMPOSEFILE} pull
 
 echo "First docker-compose run, errors messages expected due to lack of proper config files"
-docker-compose -f $COMPOSE_FILE up -d
+docker-compose -f ${COMPOSEFILE} up -d
 
 echo "Stopping all containers"
-docker-compose -f $COMPOSE_FILE down
+docker-compose -f ${COMPOSEFILE} down
 
 echo "Docker clean-up again"
 docker system prune -f;docker image prune -f;docker volume prune -f

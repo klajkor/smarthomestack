@@ -29,11 +29,11 @@ telegraf_image=`grep "image: telegraf" docker-compose.yml | awk -F":" '{print $2
 echo "Docker compose down"
 docker-compose -f docker-compose.yml down
 
-CONFIG_FILE = "${STACKDIR}/telegraf/telegraf.conf"
-echo "Creating Telegraf base config file: ${CONFIG_FILE}"
-docker run --rm ${telegraf_image} telegraf config > ${CONFIG_FILE}
+CONFIGFILE = "${STACKDIR}/telegraf/telegraf.conf"
+echo "Creating Telegraf base config file: ${CONFIGFILE}"
+docker run --rm ${telegraf_image} telegraf config > ${CONFIGFILE}
 
-mv  ${CONFIG_FILE}  ${STACKDIR}/telegraf/telegraf.conf-original
+mv  ${CONFIGFILE}  ${STACKDIR}/telegraf/telegraf.conf-original
 
 echo "Creating real Telegraf config file"
 echo -e '
@@ -124,9 +124,9 @@ echo -e '
   password = "'${MQTT_PASSWORD}'"
 
 
-' > ${CONFIG_FILE}
-echo "Setting file permissions of ${CONFIG_FILE}"
-sudo chown -R ${USER}:docker ${CONFIG_FILE}
+' > ${CONFIGFILE}
+echo "Setting file permissions of ${CONFIGFILE}"
+sudo chown -R ${USER}:docker ${CONFIGFILE}
 
 echo "Compose down"
 docker-compose -f docker-compose.yml down

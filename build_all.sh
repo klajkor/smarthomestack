@@ -33,3 +33,5 @@ do
   bash "./${SCRIPT}"
   read -p "=> ${SCRIPT} finished, press any key"
 done
+echo " "
+echo "Build script finished"

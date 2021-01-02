@@ -24,7 +24,7 @@ then
     echo "Don't forget to update mqtt.env file!"
 fi
 
-COMPOSEFILE = ${STACKDIR}/docker-compose.yml
+COMPOSEFILE=${STACKDIR}/docker-compose.yml
 echo "docker clean-up"
 docker system prune -f;docker image prune -f;docker volume prune -f
 

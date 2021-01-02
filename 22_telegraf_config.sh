@@ -29,7 +29,7 @@ telegraf_image=`grep "image: telegraf" docker-compose.yml | awk -F":" '{print $2
 echo "Docker compose down"
 docker-compose -f docker-compose.yml down
 
-CONFIGFILE = "${STACKDIR}/telegraf/telegraf.conf"
+CONFIGFILE="${STACKDIR}/telegraf/telegraf.conf"
 echo "Creating Telegraf base config file: ${CONFIGFILE}"
 docker run --rm ${telegraf_image} telegraf config > ${CONFIGFILE}
 

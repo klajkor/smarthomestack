@@ -29,7 +29,7 @@ vi influxdb.env
 BUILD_SCRIPTS="10_folder_setup.sh 11_config_skeletons.sh 19_docker_compose_init.sh 20_mosquitto_config.sh 21_influxdb_config.sh 22_telegraf_config.sh"
 for SCRIPT in $BUILD_SCRIPTS
 do
-  echo "=> Starting ${SCRIP} script:"
+  echo "=> Starting ${SCRIPT} script:"
   bash "./${SCRIPT}"
   read -p "=> Press any key"
 done

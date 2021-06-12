@@ -8,6 +8,8 @@ cd ~/smarthomestack
 set -o allexport
 source influxdb.env
 set +o allexport
+echo "Compose up influxdb"
+docker-compose -f docker-compose.yml up -d influxdb
 
 curl -G http://localhost:8086/query  --data-urlencode "u=${INFLUXDB_ADMIN_USER}" --data-urlencode "p=${INFLUXDB_ADMIN_PASSWORD}" --data-urlencode "q=SHOW DATABASES"
 

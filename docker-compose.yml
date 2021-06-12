@@ -161,7 +161,7 @@ services:
 # Create influxdb.conf first
   influxdb:
     container_name: influxdb
-    image: influxdb:latest
+    image: influxdb:1.8
     restart: unless-stopped
     security_opt:
       - apparmor:unconfined

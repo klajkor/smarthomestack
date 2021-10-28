@@ -75,51 +75,23 @@ echo -e '
   qos = 0
   persistent_session = false
   connection_timeout = "30s"
-  topics = [ "tele/+/SENSOR" ]
+  topics = [ "stat/#" ]
   client_id = "telegraf0"
-  data_format = "json"
-  json_time_key = "Time"
-  json_time_format ="2006-01-02T15:04:05"
+  data_format = "value"
+  data_type = "string"
   username = "'${MQTT_USER}'"
   password = "'${MQTT_PASSWORD}'"
 
 
 [[inputs.mqtt_consumer]]
   servers = ["tcp://mosquitto:1883"]
-  qos = 0
   persistent_session = false
+  qos = 0
   connection_timeout = "30s"
-  topics = [ "stat/+/POWER1" ]
+  topics = [ "tele/#" ]
   client_id = "telegraf1"
   data_format = "value"
   data_type = "string"
-  username = "'${MQTT_USER}'"
-  password = "'${MQTT_PASSWORD}'"
-
-
-[[inputs.mqtt_consumer]]
-  servers = ["tcp://mosquitto:1883"]
-  persistent_session = false
-  qos = 0
-  connection_timeout = "30s"
-  topics = [ "stat/+/POWER2" ]
-  client_id = "telegraf2"
-  data_format = "value"
-  data_type = "string"
-  username = "'${MQTT_USER}'"
-  password = "'${MQTT_PASSWORD}'"
-
-
-[[inputs.mqtt_consumer]]
-  servers = ["tcp://mosquitto:1883"]
-  qos = 0
-  persistent_session = false
-  connection_timeout = "30s"
-  topics = [ "tele/+/RESULT" ]
-  client_id = "telegraf3"
-  data_format = "json"
-  json_time_key = "Time"
-  json_time_format ="2006-01-02T15:04:05"
   username = "'${MQTT_USER}'"
   password = "'${MQTT_PASSWORD}'"
 

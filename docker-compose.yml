@@ -183,3 +183,25 @@ services:
       options:
         max-size: "5m"
         max-file: "3"
+
+  timeseriesadmin:
+    image: timeseriesadmin/timeseriesadmin:latest
+    container_name: timeseriesadmin
+    restart: unless-stopped
+    security_opt:
+      - apparmor:unconfined
+    networks:
+      - backend
+    ports:
+      - "8085:80"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+    env_file:
+      - .env
+    environment:
+      - TZ=${TZ}
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "3"
+

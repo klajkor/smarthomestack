@@ -2,25 +2,31 @@
 #
 # Config skeletons
 #
+
+echo "=> Creating config skeletons started"
+
 USER=`id -un`
 USERID=`id -u`
 #Docker group ID
 GROUPID=`getent group docker | cut -d: -f3`
-SUBDIR="smarthomestack"
-STACKDIR=/home/${USER}/${SUBDIR}
 
-cd ~/${SUBDIR}
-echo "PUID=${USERID}
-PGID=${GROUPID}
-TZ=Europe/Budapest
-USERDIR=/home/${USER}
-STACKDIR=/home/${USER}/${SUBDIR}
-" > .env
+if [ ! -e .env ]
+then
+    echo "<!> Please create proper .env file! Exiting."
+    exit 1
+fi
 
-echo 'env $(cat /home/'${USER}'/'${SUBDIR}'/.env) /usr/local/bin/docker-compose -f /home/'${USER}'/'${SUBDIR}'/docker-compose.yml up -d' > stack_up.sh
+set -o allexport
+source .env
+set +o allexport
+
+# ${STACKDIR} is from .env
+cd ${STACKDIR}
+
+echo 'env $(cat '${STACKDIR}'/.env) '${COMPOSECOMMAND}' -f '${STACKDIR}'/docker-compose.yml up -d' > stack_up.sh
 chmod 755 stack_up.sh
 
-echo 'env $(cat /home/'${USER}'/'${SUBDIR}'/.env) /usr/local/bin/docker-compose -f /home/'${USER}'/'${SUBDIR}'/docker-compose.yml down' > stack_down.sh
+echo 'env $(cat '${STACKDIR}'/.env) '${COMPOSECOMMAND}' -f '${STACKDIR}'/docker-compose.yml down' > stack_down.sh
 chmod 755 stack_down.sh
 
 echo -e "listener 1883
@@ -30,7 +36,7 @@ allow_anonymous false
 password_file /mosquitto/config/passwd
 persistence_location /mosquitto/data/
 persistence_file mosquitto.db
-persistence true \n" > ~/${SUBDIR}/mosquitto/config/mosquitto.conf
+persistence true \n" > ${STACKDIR}/mosquitto/config/mosquitto.conf
 
 echo -e "
   broker: mosquitto
@@ -38,7 +44,7 @@ echo -e "
   password: YOUR_MQTT_PASSWD
   discovery: true
   discovery_prefix: homeassistant
-" > ~/${SUBDIR}/homeassistant/mqtt_config.yaml-example
+" > ${STACKDIR}/homeassistant/mqtt_config.yaml-example
 echo "Please don't forget to create a valid ./homeassistant/mqtt_config.yaml with proper credentials"
 echo "Go to subdirectory: cd ./homeassistant"
 echo "Copy the example file: cp mqtt_config.yaml-example mqtt_config.yaml"
@@ -47,9 +53,9 @@ echo " "
 
 TS=$(date +"%Y%m%d%H%M%S")
 
-if [ -e ~/${SUBDIR}/homeassistant/configuration.yaml ]
+if [ -e ${STACKDIR}/homeassistant/configuration.yaml ]
 then
-    cp ~/${SUBDIR}/homeassistant/configuration.yaml ~/${SUBDIR}/homeassistant/configuration.yaml_${TS}
+    cp ${STACKDIR}/homeassistant/configuration.yaml ${STACKDIR}/homeassistant/configuration.yaml_${TS}
 fi
 
 echo -e '
@@ -69,6 +75,6 @@ mqtt: !include mqtt_config.yaml
 sensor: !include sensor_config.yaml
 switch: !include switch_config.yaml
 
-' > ~/${SUBDIR}/homeassistant/configuration.yaml
+' > ${STACKDIR}/homeassistant/configuration.yaml
 
-
+echo "=> Creating config skeletons completed"

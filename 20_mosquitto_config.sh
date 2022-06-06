@@ -3,13 +3,24 @@
 # Initial config of Mosquitto
 #
 
-STACKDIR=${HOME}/smarthomestack
+echo "=> Initial config of Mosquitto started"
 
+if [ ! -e .env ]
+then
+    echo "<!> Please create proper .env file! Exiting."
+    exit 1
+fi
+
+set -o allexport
+source .env
+set +o allexport
+
+# ${STACKDIR} is from .env
 cd ${STACKDIR}
 
 if [ ! -e mqtt.env ]
 then
-    echo "Please create proper mqtt.env file!"
+    echo "<!> Please create proper mqtt.env file! Exiting."
     exit 1
 fi
 
@@ -18,7 +29,7 @@ source mqtt.env
 set +o allexport
 
 echo "Shutting down container(s)"
-docker-compose -f docker-compose.yml down
+${COMPOSECOMMAND} -f docker-compose.yml down
 
 mosquitto_image=`grep "image: eclipse-mosquitto" docker-compose.yml | awk -F":" '{print $2":"$3}'`
 
@@ -33,14 +44,15 @@ echo "/mosquitto/config/passwd:"
 docker run --rm -v ${STACKDIR}/mosquitto/config:/mosquitto/config -v ${STACKDIR}/mosquitto/log:/mosquitto/log ${mosquitto_image} sh -c "cat /mosquitto/config/passwd"
 
 echo "Starting up image ${mosquitto_image}"
-docker-compose -f docker-compose.yml up -d mosquitto
+${COMPOSECOMMAND} -f docker-compose.yml up -d mosquitto
 
 echo "Show some logs, press Ctrl-C to quit from logs"
-docker-compose -f docker-compose.yml logs --tail=50 -f
+${COMPOSECOMMAND} -f docker-compose.yml logs --tail=50 -f
 
 echo "Shutting down container(s)"
-docker-compose -f docker-compose.yml down
+${COMPOSECOMMAND} -f docker-compose.yml down
 
 echo 'mqtt: !include mqtt_config.yaml' >> ${STACKDIR}/homeassistant/configuration.yaml
 echo 'sensor: !include sensor_config.yaml' >> ${STACKDIR}/homeassistant/configuration.yaml
 
+echo "=> Initial config of Mosquitto completed"

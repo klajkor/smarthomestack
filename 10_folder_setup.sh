@@ -2,50 +2,66 @@
 #
 # Folder setup
 #
+
+echo "=> Folder setup started"
 USER=`id -un`
-SUBDIR="smarthomestack"
 
-cd ~
-echo "Creating ${SUBDIR}"
-mkdir -p ~/${SUBDIR}
-sudo setfacl -Rdm g:docker:rwx ~/${SUBDIR}
-sudo chmod -R 775 ~/${SUBDIR}
-echo "Creating some subdirs under ${SUBDIR}"
-mkdir -p ~/${SUBDIR}/shared
-mkdir -p ~/${SUBDIR}/portainer/data
-mkdir -p ~/${SUBDIR}/mosquitto/config
-mkdir -p ~/${SUBDIR}/mosquitto/data
-mkdir -p ~/${SUBDIR}/mosquitto/log
-mkdir -p ~/${SUBDIR}/homeassistant
-mkdir -p ~/${SUBDIR}/grafana
-mkdir -p ~/${SUBDIR}/postgresql/data
-mkdir -p ~/${SUBDIR}/mariadb/data
-mkdir -p ~/${SUBDIR}/adminer
-mkdir -p ~/${SUBDIR}/influxdb/db
-mkdir -p ~/${SUBDIR}/telegraf
-
-cd ~/${SUBDIR}
-##find . -type d -exec touch {}/.gitignore \;
-if [ -e ~/${SUBDIR}/mosquitto/log/.gitignore ]
+if [ ! -e .env ]
 then
-    rm ~/${SUBDIR}/mosquitto/log/.gitignore
+    echo "<!> Please create proper .env file! Exiting."
+    exit 1
+fi
+
+set -o allexport
+source .env
+set +o allexport
+
+# ${STACKDIR} is from .env
+cd ${STACKDIR}
+
+echo "Stack directory: ${STACKDIR}"
+mkdir -p ${STACKDIR}
+sudo setfacl -Rdm g:docker:rwx ${STACKDIR}
+sudo chmod -R 775 ${STACKDIR}
+echo "Creating subdirs under ${STACKDIR}"
+mkdir -p ${STACKDIR}/shared
+mkdir -p ${STACKDIR}/portainer/data
+mkdir -p ${STACKDIR}/mosquitto/config
+mkdir -p ${STACKDIR}/mosquitto/data
+mkdir -p ${STACKDIR}/mosquitto/log
+mkdir -p ${STACKDIR}/homeassistant
+mkdir -p ${STACKDIR}/grafana
+mkdir -p ${STACKDIR}/influxdb/db
+mkdir -p ${STACKDIR}/telegraf
+
+# mkdir -p ${STACKDIR}/postgresql/data
+# mkdir -p ${STACKDIR}/mariadb/data
+# mkdir -p ${STACKDIR}/adminer
+
+
+cd ${STACKDIR}
+##find . -type d -exec touch {}/.gitignore \;
+if [ -e ${STACKDIR}/mosquitto/log/.gitignore ]
+then
+    rm ${STACKDIR}/mosquitto/log/.gitignore
 fi
 echo "Creating some files under ${SUBDIR}"
-touch ~/${SUBDIR}/mosquitto/config/mosquitto.conf
-touch ~/${SUBDIR}/mosquitto/config/passwd
-touch ~/${SUBDIR}/mosquitto/log/mosquitto.log
-touch ~/${SUBDIR}/influxdb/influxdb.conf
-touch ~/${SUBDIR}/telegraf/telegraf.conf
+touch ${STACKDIR}/mosquitto/config/mosquitto.conf
+touch ${STACKDIR}/mosquitto/config/passwd
+touch ${STACKDIR}/mosquitto/log/mosquitto.log
+touch ${STACKDIR}/influxdb/influxdb.conf
+touch ${STACKDIR}/telegraf/telegraf.conf
 # for accessing telegraf log from outside
-touch ~/${SUBDIR}/telegraf/telegraf.log
+touch ${STACKDIR}/telegraf/telegraf.log
 echo "Setting file permissions"
-sudo setfacl -Rdm g:docker:rwx ~/${SUBDIR}
-sudo chmod -R 775 ~/${SUBDIR}
-sudo chmod -R ugo-x,ugo+X ~/${SUBDIR}
-sudo chmod -R ugo+x ~/${SUBDIR}/*.sh
-sudo chown -R ${USER}:docker ~/${SUBDIR}
+sudo setfacl -Rdm g:docker:rwx ${STACKDIR}
+sudo chmod -R 775 ${STACKDIR}
+sudo chmod -R ugo-x,ugo+X ${STACKDIR}
+sudo chmod -R ugo+x ${STACKDIR}/*.sh
+sudo chown -R ${USER}:docker ${STACKDIR}
 echo "Setting specific mosquitto file permissions"
-sudo chgrp -R 1883 ~/${SUBDIR}/mosquitto
-sudo setfacl -Rdm u:1883:rw ~/${SUBDIR}/mosquitto
-sudo setfacl -Rdm g:1883:rw ~/${SUBDIR}/mosquitto
+sudo chgrp -R ${PGID} ${STACKDIR}/mosquitto
+sudo setfacl -Rdm u:${PUID}:rw ${STACKDIR}/mosquitto
+sudo setfacl -Rdm g:${PGID}:rw ${STACKDIR}/mosquitto
 
+echo "=> Folder setup completed"

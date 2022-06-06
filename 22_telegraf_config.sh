@@ -3,31 +3,36 @@
 # Initial config of Telegraf
 #
 
-STACKDIR=${HOME}/smarthomestack
-
-cd ${STACKDIR}
+if [ ! -e .env ]
+then
+    echo "<!> Please create proper .env file! Exiting."
+    exit 1
+fi
 
 if [ ! -e influxdb.env ]
 then
-    echo "Please create proper influxdb.env file!"
+    echo "<!> Please create proper influxdb.env file! Exiting."
     exit 1
 fi
 
 if [ ! -e mqtt.env ]
 then
-    echo "Please create proper mqtt.env file!"
+    echo "<!> Please create proper mqtt.env file! Exiting."
     exit 2
 fi
 
 set -o allexport
+source .env
 source mqtt.env
 source influxdb.env
 set +o allexport
 
+cd ${STACKDIR}
+
 telegraf_image=`grep "image: telegraf" docker-compose.yml | awk -F":" '{print $2":"$3}'`
 
 echo "Docker compose down"
-docker-compose -f docker-compose.yml down
+${COMPOSECOMMAND} -f docker-compose.yml down
 
 CONFIGFILE="${STACKDIR}/telegraf/telegraf.conf"
 echo "Creating Telegraf base config file: ${CONFIGFILE}"
@@ -85,13 +90,14 @@ echo -e '
 
 [[inputs.mqtt_consumer]]
   servers = ["tcp://mosquitto:1883"]
-  persistent_session = false
   qos = 0
+  persistent_session = false
   connection_timeout = "30s"
   topics = [ "tele/#" ]
   client_id = "telegraf1"
-  data_format = "value"
-  data_type = "string"
+  data_format = "json"
+  json_time_key = "Time"
+  json_time_format ="2006-01-02T15:04:05"
   username = "'${MQTT_USER}'"
   password = "'${MQTT_PASSWORD}'"
 
@@ -101,4 +107,4 @@ echo "Setting file permissions of ${CONFIGFILE}"
 sudo chown -R ${USER}:docker ${CONFIGFILE}
 
 echo "Compose down"
-docker-compose -f docker-compose.yml down
+${COMPOSECOMMAND} -f docker-compose.yml down

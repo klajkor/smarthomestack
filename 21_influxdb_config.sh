@@ -3,9 +3,26 @@
 # Initial config of Influxdb
 #
 
-STACKDIR=${HOME}/smarthomestack
+echo "=> Initial config of Influxdb started"
 
+if [ ! -e .env ]
+then
+    echo "<!> Please create proper .env file! Exiting."
+    exit 1
+fi
+
+set -o allexport
+source .env
+set +o allexport
+
+# ${STACKDIR} is from .env
 cd ${STACKDIR}
+
+if [ ! -e influxdb.env ]
+then
+    echo "<!> Please create proper influxdb.env file! Exiting."
+    exit 1
+fi
 
 set -o allexport
 source influxdb.env
@@ -13,7 +30,7 @@ set +o allexport
 
 influxdb_image=`grep "image: influxdb" docker-compose.yml | awk -F":" '{print $2":"$3}'`
 
-docker-compose -f docker-compose.yml down
+${COMPOSECOMMAND} -f docker-compose.yml down
 
 echo "Creating influxdb.conf for image ${influxdb_image}"
 docker run --rm -p 8086:8086 ${influxdb_image} influxd config > ${STACKDIR}/influxdb/influxdb.conf
@@ -26,7 +43,7 @@ echo "Init influxdb"
 docker run --rm -e INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER} -e INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_ADMIN_PASSWORD} -v ${STACKDIR}/influxdb/db:/var/lib/influxdb ${influxdb_image} /init-influxdb.sh
 
 echo "Compose up influxdb"
-docker-compose -f docker-compose.yml up -d influxdb
+${COMPOSECOMMAND} -f docker-compose.yml up -d influxdb
 
 echo "Creating admin user"
 docker exec -it influxdb influx -execute "CREATE USER ${INFLUXDB_ADMIN_USER} WITH PASSWORD '${INFLUXDB_ADMIN_PASSWORD}' WITH ALL PRIVILEGES"
@@ -47,4 +64,6 @@ echo "Show created databases"
 curl -G http://localhost:8086/query  --data-urlencode "u=${INFLUXDB_ADMIN_USER}" --data-urlencode "p=${INFLUXDB_ADMIN_PASSWORD}" --data-urlencode "q=SHOW DATABASES"
 
 echo "Compose down"
-docker-compose -f docker-compose.yml down
+${COMPOSECOMMAND} -f docker-compose.yml down
+
+echo "=> Initial config of Influxdb completed"

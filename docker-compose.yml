@@ -46,7 +46,7 @@ services:
   mosquitto:
     container_name: mosquitto
     image: eclipse-mosquitto:latest
-    user: "1883"
+    user: "${PUID}:${PGID}"
     restart: unless-stopped
     security_opt:
       - apparmor:unconfined
@@ -130,7 +130,7 @@ services:
 # Grafana - Graphical data visualization for InfluxDB data
   grafana:
     container_name: grafana
-    image: grafana/grafana:latest
+    image: grafana/grafana:8.5.4
     restart: unless-stopped
     networks:
       - backend
@@ -147,9 +147,7 @@ services:
     env_file:
       - .env
     environment:
-      GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel"
-    environment:
-      - TZ=${TZ}
+      - TZ=${TZ}      
     logging:
       options:
         max-size: "5m"

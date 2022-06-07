@@ -58,8 +58,9 @@ sudo setfacl -Rdm g:docker:rw ${STACKDIR}
 sudo chmod -R ug+rw ${STACKDIR}
 sudo chmod -R o+r ${STACKDIR}
 sudo chmod -R ugo+x ${STACKDIR}/*.sh
-sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
 sudo chmod -R ugo-x ${STACKDIR}/telegraf/telegraf.log
+sudo chown -R 1883:1883 ${STACKDIR}/mosquitto/log/mosquitto.log
+sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
 #sudo chmod -R ugo-x,ugo+X ${STACKDIR}
 #echo "Setting specific mosquitto file permissions"
 #sudo chgrp -R ${PGID} ${STACKDIR}/mosquitto

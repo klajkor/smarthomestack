@@ -37,6 +37,7 @@ sudo chown -R ${USER}:docker ${STACKDIR}/mosquitto
 sudo setfacl -Rdm g:docker:rw ${STACKDIR}/mosquitto
 sudo chmod -R ug+rw ${STACKDIR}/mosquitto
 sudo chmod -R o+r ${STACKDIR}/mosquitto
+sudo chown -R 1883:1883 ${STACKDIR}/mosquitto/log/mosquitto.log
 sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
 
 echo "Setting up password for image ${mosquitto_image}"

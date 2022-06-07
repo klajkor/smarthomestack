@@ -49,7 +49,7 @@ echo "Waiting for 3 sec"
 sleep 3
 
 echo "Creating admin user"
-${COMPOSECOMMAND} exec -it influxdb influx -execute "CREATE USER ${INFLUXDB_ADMIN_USER} WITH PASSWORD ${INFLUXDB_ADMIN_PASSWORD} WITH ALL PRIVILEGES"
+${COMPOSECOMMAND} exec -it influxdb influx -execute "CREATE USER ${INFLUXDB_ADMIN_USER} WITH PASSWORD '${INFLUXDB_ADMIN_PASSWORD}' WITH ALL PRIVILEGES"
 read -p "=> Press any key to continue"
 
 echo "Creating sensors DB"

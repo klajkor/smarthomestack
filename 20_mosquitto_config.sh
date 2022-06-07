@@ -41,12 +41,11 @@ if [ ! -e ${MOSQUITTO_LOG_FILE} ]
 then
     touch ${MOSQUITTO_LOG_FILE}
 fi
-sudo chown -R ${USER}:docker ${STACKDIR}/mosquitto
-sudo setfacl -Rdm g:docker:rw ${STACKDIR}/mosquitto
 sudo chmod -R ug+rw ${STACKDIR}/mosquitto
 sudo chmod -R o+r ${STACKDIR}/mosquitto
 sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
-sudo chown -R 1883:1883 ${STACKDIR}/mosquitto/log/mosquitto.log
+sudo chown -R 1883:1883 ${STACKDIR}/mosquitto
+
 
 echo "Setting up password for image ${mosquitto_image}"
 docker run --rm -v ${STACKDIR}/mosquitto/config:/mosquitto/config -v ${STACKDIR}/mosquitto/log:/mosquitto/log ${mosquitto_image} sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"

@@ -60,10 +60,5 @@ sudo chmod -R o+r ${STACKDIR}
 sudo chmod -R ugo+x ${STACKDIR}/*.sh
 sudo chmod -R ugo-x ${STACKDIR}/telegraf/telegraf.log
 sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
-#sudo chmod -R ugo-x,ugo+X ${STACKDIR}
-#echo "Setting specific mosquitto file permissions"
-#sudo chgrp -R ${PGID} ${STACKDIR}/mosquitto
-#sudo setfacl -Rdm u:${PUID}:rw ${STACKDIR}/mosquitto
-#sudo setfacl -Rdm g:${PGID}:rw ${STACKDIR}/mosquitto
 
 echo "=> Folder setup completed"

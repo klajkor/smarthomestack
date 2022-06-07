@@ -44,6 +44,7 @@ fi
 sudo chmod -R ug+rw ${STACKDIR}/mosquitto
 sudo chmod -R o+r ${STACKDIR}/mosquitto
 sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
+#This chown needed exactly as it is below!
 sudo chown -R 1883:1883 ${STACKDIR}/mosquitto
 
 

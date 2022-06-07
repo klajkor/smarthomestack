@@ -54,14 +54,15 @@ touch ${STACKDIR}/telegraf/telegraf.conf
 # for accessing telegraf log from outside
 touch ${STACKDIR}/telegraf/telegraf.log
 echo "Setting file permissions"
-sudo setfacl -Rdm g:docker:rwx ${STACKDIR}
-sudo chmod -R 775 ${STACKDIR}
-sudo chmod -R ugo-x,ugo+X ${STACKDIR}
-sudo chmod -R ugo+x ${STACKDIR}/*.sh
 sudo chown -R ${USER}:docker ${STACKDIR}
-echo "Setting specific mosquitto file permissions"
-sudo chgrp -R ${PGID} ${STACKDIR}/mosquitto
-sudo setfacl -Rdm u:${PUID}:rw ${STACKDIR}/mosquitto
-sudo setfacl -Rdm g:${PGID}:rw ${STACKDIR}/mosquitto
+sudo setfacl -Rdm g:docker:rw ${STACKDIR}
+sudo chmod -R ug+rw ${STACKDIR}
+sudo chmod -R o+r ${STACKDIR}
+sudo chmod -R ugo+x ${STACKDIR}/*.sh
+#sudo chmod -R ugo-x,ugo+X ${STACKDIR}
+#echo "Setting specific mosquitto file permissions"
+#sudo chgrp -R ${PGID} ${STACKDIR}/mosquitto
+#sudo setfacl -Rdm u:${PUID}:rw ${STACKDIR}/mosquitto
+#sudo setfacl -Rdm g:${PGID}:rw ${STACKDIR}/mosquitto
 
 echo "=> Folder setup completed"

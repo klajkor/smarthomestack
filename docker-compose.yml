@@ -111,10 +111,11 @@ services:
     container_name: telegraf
     image: telegraf:latest
     restart: unless-stopped
+    user: "${PUID}:${PGID}"
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - ${STACKDIR}/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - ${STACKDIR}/telegraf/telegraf.log:/telegraf.log
+      - ${STACKDIR}/telegraf/telegraf.log:/var/log/telegraf/telegraf.log
     depends_on:
       - influxdb
       - mosquitto

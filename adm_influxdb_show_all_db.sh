@@ -27,20 +27,27 @@ cd ${STACKDIR}
 echo `pwd`
 echo "Compose up influxdb"
 ${COMPOSECOMMAND} -f docker-compose.yml up -d influxdb
-echo "Wait for a sec, at least"
+echo "Waiting for 2 sec"
 sleep 2
 
 curl -G http://localhost:8086/query  --data-urlencode "u=${INFLUXDB_ADMIN_USER}" --data-urlencode "p=${INFLUXDB_ADMIN_PASSWORD}" --data-urlencode "q=SHOW DATABASES"
+
+echo "SHOW USERS"
+echo "--------------"
+${COMPOSECOMMAND} exec -it influxdb influx -username ${INFLUXDB_ADMIN_USER} -password "${INFLUXDB_ADMIN_PASSWORD}"  -execute "SHOW USERS"
+read -p "=> Press any key to continue"
 
 echo "SHOW DATABASES"
 echo "--------------"
 ${COMPOSECOMMAND} exec -it influxdb influx -username ${INFLUXDB_ADMIN_USER} -password "${INFLUXDB_ADMIN_PASSWORD}"  -execute "USE sensors
 SHOW DATABASES"
+read -p "=> Press any key to continue"
 
 echo "SHOW SERIES"
 echo "-----------"
 ${COMPOSECOMMAND} exec -it influxdb influx -username ${INFLUXDB_ADMIN_USER} -password "${INFLUXDB_ADMIN_PASSWORD}"  -execute "USE sensors
 SHOW SERIES"
+read -p "=> Press any key to continue"
 
 echo "Show last 20 values"
 echo "-------------------"

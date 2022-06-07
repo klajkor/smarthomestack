@@ -46,7 +46,7 @@ services:
   mosquitto:
     container_name: mosquitto
     image: eclipse-mosquitto:latest
-    user: "${PUID}:${PGID}"
+    user: "1883:1883"
     restart: unless-stopped
     security_opt:
       - apparmor:unconfined

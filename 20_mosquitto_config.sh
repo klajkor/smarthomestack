@@ -31,14 +31,22 @@ ${COMPOSECOMMAND} -f docker-compose.yml down
 mosquitto_image=`grep "image: eclipse-mosquitto" docker-compose.yml | awk -F":" '{print $2":"$3}'`
 
 echo "Making sure that there is a passwd and log file"
-touch ${STACKDIR}/mosquitto/config/passwd
-touch ${STACKDIR}/mosquitto/log/mosquitto.log
+MOSQUITTO_PASSWD_FILE=${STACKDIR}/mosquitto/config/passwd
+MOSQUITTO_LOG_FILE=${STACKDIR}/mosquitto/log/mosquitto.log
+if [ ! -e ${MOSQUITTO_PASSWD_FILE} ]
+then
+    touch ${MOSQUITTO_PASSWD_FILE}
+fi
+if [ ! -e ${MOSQUITTO_LOG_FILE} ]
+then
+    touch ${MOSQUITTO_LOG_FILE}
+fi
 sudo chown -R ${USER}:docker ${STACKDIR}/mosquitto
 sudo setfacl -Rdm g:docker:rw ${STACKDIR}/mosquitto
 sudo chmod -R ug+rw ${STACKDIR}/mosquitto
 sudo chmod -R o+r ${STACKDIR}/mosquitto
-sudo chown -R 1883:1883 ${STACKDIR}/mosquitto/log/mosquitto.log
 sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
+sudo chown -R 1883:1883 ${STACKDIR}/mosquitto/log/mosquitto.log
 
 echo "Setting up password for image ${mosquitto_image}"
 docker run --rm -v ${STACKDIR}/mosquitto/config:/mosquitto/config -v ${STACKDIR}/mosquitto/log:/mosquitto/log ${mosquitto_image} sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"

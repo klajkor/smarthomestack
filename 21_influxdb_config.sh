@@ -45,12 +45,17 @@ read -p "=> Press any key to continue"
 echo "Compose up influxdb"
 ${COMPOSECOMMAND} -f docker-compose.yml up -d influxdb
 read -p "=> Press any key to continue"
-echo "Waiting for 3 sec"
-sleep 3
+echo "Waiting for 2 sec"
+sleep 2
 
-echo "Creating admin user"
-${COMPOSECOMMAND} exec -it influxdb influx -execute "CREATE USER ${INFLUXDB_ADMIN_USER} WITH PASSWORD '${INFLUXDB_ADMIN_PASSWORD}' WITH ALL PRIVILEGES"
+echo "Show users"
+${COMPOSECOMMAND} exec -it influxdb influx  -username ${INFLUXDB_ADMIN_USER} -password "${INFLUXDB_ADMIN_PASSWORD}" -execute 'SHOW USERS'
 read -p "=> Press any key to continue"
+
+#Not needed for now
+#echo "Creating admin user"
+#${COMPOSECOMMAND} exec -it influxdb influx -execute "CREATE USER ${INFLUXDB_ADMIN_USER} WITH PASSWORD '${INFLUXDB_ADMIN_PASSWORD}' WITH ALL PRIVILEGES"
+#read -p "=> Press any key to continue"
 
 echo "Creating sensors DB"
 ${COMPOSECOMMAND} exec -it influxdb influx  -username ${INFLUXDB_ADMIN_USER} -password "${INFLUXDB_ADMIN_PASSWORD}" -execute 'CREATE DATABASE sensors'

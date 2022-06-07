@@ -11,13 +11,6 @@ then
     exit 1
 fi
 
-set -o allexport
-source .env
-set +o allexport
-
-# ${STACKDIR} is from .env
-cd ${STACKDIR}
-
 if [ ! -e mqtt.env ]
 then
     echo "<!> Please create proper mqtt.env file! Exiting."
@@ -25,8 +18,12 @@ then
 fi
 
 set -o allexport
+source .env
 source mqtt.env
 set +o allexport
+
+# ${STACKDIR} is from .env
+cd ${STACKDIR}
 
 echo "Shutting down container(s)"
 ${COMPOSECOMMAND} -f docker-compose.yml down
@@ -36,6 +33,11 @@ mosquitto_image=`grep "image: eclipse-mosquitto" docker-compose.yml | awk -F":" 
 echo "Making sure that there is a passwd and log file"
 touch ${STACKDIR}/mosquitto/config/passwd
 touch ${STACKDIR}/mosquitto/log/mosquitto.log
+sudo chown -R ${USER}:docker ${STACKDIR}/mosquitto
+sudo setfacl -Rdm g:docker:rw ${STACKDIR}/mosquitto
+sudo chmod -R ug+rw ${STACKDIR}/mosquitto
+sudo chmod -R o+r ${STACKDIR}/mosquitto
+sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
 
 echo "Setting up password for image ${mosquitto_image}"
 docker run --rm -v ${STACKDIR}/mosquitto/config:/mosquitto/config -v ${STACKDIR}/mosquitto/log:/mosquitto/log ${mosquitto_image} sh -c "mosquitto_passwd -b /mosquitto/config/passwd ${MQTT_USER} ${MQTT_PASSWORD}"

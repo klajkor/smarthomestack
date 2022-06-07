@@ -21,8 +21,7 @@ cd ${STACKDIR}
 
 echo "Stack directory: ${STACKDIR}"
 mkdir -p ${STACKDIR}
-sudo setfacl -Rdm g:docker:rwx ${STACKDIR}
-sudo chmod -R 775 ${STACKDIR}
+sudo chown -R ${USER}:docker ${STACKDIR}
 echo "Creating subdirs under ${STACKDIR}"
 mkdir -p ${STACKDIR}/shared
 mkdir -p ${STACKDIR}/portainer/data
@@ -59,6 +58,8 @@ sudo setfacl -Rdm g:docker:rw ${STACKDIR}
 sudo chmod -R ug+rw ${STACKDIR}
 sudo chmod -R o+r ${STACKDIR}
 sudo chmod -R ugo+x ${STACKDIR}/*.sh
+sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
+sudo chmod -R ugo-x ${STACKDIR}/telegraf/telegraf.log
 #sudo chmod -R ugo-x,ugo+X ${STACKDIR}
 #echo "Setting specific mosquitto file permissions"
 #sudo chgrp -R ${PGID} ${STACKDIR}/mosquitto

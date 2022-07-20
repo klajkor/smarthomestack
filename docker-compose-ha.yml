@@ -1,5 +1,5 @@
 ###
-### Standard config, with no HomeAssistant
+### Full config with HA
 ###
 
 version: "3.7"
@@ -73,6 +73,38 @@ services:
       PUID: $PUID
       PGID: $PGID
       TZ: $TZ
+    logging:
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+# HomeAssistant
+  homeassistant:
+    container_name: homeassistant
+    restart: unless-stopped
+    image: homeassistant/home-assistant:stable
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyUSB1:/dev/ttyUSB1
+      - /dev/ttyACM0:/dev/ttyACM0
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ${STACKDIR}/homeassistant:/config
+      - ${STACKDIR}/shared:/shared
+    networks:
+      - backend
+    ports:
+      - "8123:8123"
+    privileged: true
+    depends_on:
+      - mosquitto
+      - influxdb
+    env_file:
+      - .env
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
     logging:
       options:
         max-size: "5m"

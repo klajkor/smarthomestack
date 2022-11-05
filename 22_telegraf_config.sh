@@ -102,6 +102,23 @@ echo -e '
   password = "'${MQTT_PASSWORD}'"
 
 
+[[inputs.mqtt_consumer]]
+  servers = ["tcp://mosquitto:1883"]
+  username = "'${MQTT_USER}'"
+  password = "'${MQTT_PASSWORD}'"
+  qos = 0
+  persistent_session = false
+  connection_timeout = "30s"
+  name_override = "esphome"
+  topics = [ "esphometele/#" ]
+  client_id = "telegraf2"
+  data_format = "value"
+  data_type = "float"
+  [[inputs.mqtt_consumer.topic_parsing]]
+    topic = "esphometele/+/sensor/+/state"
+    fields = "_/_/_/field/_"
+
+
 ' > ${CONFIGFILE}
 echo "Setting file permissions of ${CONFIGFILE}"
 sudo chown -R ${USER}:docker ${CONFIGFILE}

@@ -32,6 +32,7 @@ mkdir -p ${STACKDIR}/homeassistant
 mkdir -p ${STACKDIR}/grafana
 mkdir -p ${STACKDIR}/influxdb/db
 mkdir -p ${STACKDIR}/telegraf
+mkdir -p ${STACKDIR}/zigbee2mqtt/data
 
 # mkdir -p ${STACKDIR}/postgresql/data
 # mkdir -p ${STACKDIR}/mariadb/data
@@ -52,6 +53,7 @@ touch ${STACKDIR}/influxdb/influxdb.conf
 touch ${STACKDIR}/telegraf/telegraf.conf
 # for accessing telegraf log from outside
 touch ${STACKDIR}/telegraf/telegraf.log
+touch ${STACKDIR}/zigbee2mqtt/data/configuration.yaml
 echo "Setting file permissions"
 sudo chown -R ${USER}:docker ${STACKDIR}
 sudo setfacl -Rdm g:docker:rw ${STACKDIR}
@@ -60,5 +62,6 @@ sudo chmod -R o+r ${STACKDIR}
 sudo chmod -R ugo+x ${STACKDIR}/*.sh
 sudo chmod -R ugo-x ${STACKDIR}/telegraf/telegraf.log
 sudo chmod -R ugo-x ${STACKDIR}/mosquitto/log/mosquitto.log
+sudo chmod -R ugo-x ${STACKDIR}/zigbee2mqtt/data/configuration.yaml
 
 echo "=> Folder setup completed"

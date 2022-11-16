@@ -176,3 +176,27 @@ services:
         max-size: "5m"
         max-file: "3"
 
+# Zigbee2MQTT
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    security_opt:
+      - apparmor:unconfined
+    networks:
+      - backend
+    ports:
+      # Frontend port
+      - 8080:8080
+    env_file:
+      - .env
+      - zigbee_dongle.env
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - ${STACKDIR}/zigbee2mqtt/data:/app/data
+      - /run/udev:/run/udev:ro
+    environment:
+      - TZ=${TZ}
+    devices:
+    # Make sure this matched your adapter location defined in 'zigbee_dongle.env'
+      - /dev/serial/by-id/${ZIGBEE_DONGLE_SERIALID}:/dev/ttyACM0

@@ -30,6 +30,12 @@ then
     echo "=> Don't forget to update mqtt.env file!"
 fi
 
+if [ ! -e zigbee_dongle.env ]
+then
+    cp zigbee_dongle.env-example zigbee_dongle.env
+    echo "=> Don't forget to update zigbee_dongle.env file!"
+fi
+
 COMPOSEFILE=${STACKDIR}/docker-compose.yml
 echo "docker clean-up"
 docker system prune -f;docker image prune -f;docker volume prune -f

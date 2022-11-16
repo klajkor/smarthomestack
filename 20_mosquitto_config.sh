@@ -30,6 +30,17 @@ ${COMPOSECOMMAND} -f docker-compose.yml down
 
 mosquitto_image=`grep "image: eclipse-mosquitto" docker-compose.yml | awk -F":" '{print $2":"$3}'`
 
+echo "Creating base config file"
+
+echo -e "listener 1883
+log_dest file /mosquitto/log/mosquitto.log
+log_timestamp_format %Y-%m-%d %H:%M:%S
+allow_anonymous false
+password_file /mosquitto/config/passwd
+persistence_location /mosquitto/data/
+persistence_file mosquitto.db
+persistence true \n" > ${STACKDIR}/mosquitto/config/mosquitto.conf
+
 echo "Making sure that there is a passwd and log file"
 MOSQUITTO_PASSWD_FILE=${STACKDIR}/mosquitto/config/passwd
 MOSQUITTO_LOG_FILE=${STACKDIR}/mosquitto/log/mosquitto.log

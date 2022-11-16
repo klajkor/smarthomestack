@@ -18,6 +18,7 @@ fi
 
 set -o allexport
 source .env
+source mqtt.env
 set +o allexport
 
 # ${STACKDIR} is from .env
@@ -29,22 +30,13 @@ chmod 755 stack_up.sh
 echo 'env $(cat '${STACKDIR}'/.env) '${COMPOSECOMMAND}' -f '${STACKDIR}'/docker-compose.yml down' > stack_down.sh
 chmod 755 stack_down.sh
 
-echo -e "listener 1883
-log_dest file /mosquitto/log/mosquitto.log
-log_timestamp_format %Y-%m-%d %H:%M:%S
-allow_anonymous false
-password_file /mosquitto/config/passwd
-persistence_location /mosquitto/data/
-persistence_file mosquitto.db
-persistence true \n" > ${STACKDIR}/mosquitto/config/mosquitto.conf
-
-echo -e "
+echo -e '
   broker: mosquitto
-  username: YOUR_MQTT_USER
-  password: YOUR_MQTT_PASSWD
+  username: '${MQTT_USER}'
+  password: '${MQTT_PASSWORD}'
   discovery: true
   discovery_prefix: homeassistant
-" > ${STACKDIR}/homeassistant/mqtt_config.yaml-example
+' > ${STACKDIR}/homeassistant/mqtt_config.yaml-example
 echo "Please don't forget to create a valid ./homeassistant/mqtt_config.yaml with proper credentials"
 echo "Go to subdirectory: cd ./homeassistant"
 echo "Copy the example file: cp mqtt_config.yaml-example mqtt_config.yaml"

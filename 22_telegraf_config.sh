@@ -118,7 +118,19 @@ echo -e '
     topic = "esphometele/+/sensor/+/state"
     fields = "_/_/_/field/_"
 
-
+[[inputs.mqtt_consumer]]
+  servers = ["tcp://mosquitto:1883"]
+  username = "'${MQTT_USER}'"
+  password = "'${MQTT_PASSWORD}'"
+  qos = 0
+  persistent_session = false
+  connection_timeout = "30s"
+  name_override = "zigbee2mqtt"
+  topics = [ "zigbee2mqtt/+" ]
+  client_id = "telegraf3"
+  data_format = "json"
+  json_string_fields = ["occupancy", "contact"]
+  
 ' > ${CONFIGFILE}
 echo "Setting file permissions of ${CONFIGFILE}"
 sudo chown -R ${USER}:docker ${CONFIGFILE}
